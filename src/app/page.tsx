@@ -1,25 +1,12 @@
-import Link from "next/link";
 import AvailabilitySearch from "@/components/AvailabilitySearch";
+import HomeHero from "@/components/HomeHero";
 
 const whatsappUrl = "https://wa.me/66992598178?text=Hello%20Coconut%20Beach%2C%20I%27d%20like%20to%20check%20availability.";
 
 export default function HomePage() {
   return (
     <main>
-      <section className="hero">
-        <div className="hero-inner">
-          <p className="eyebrow">Koh Phangan · Thailand</p>
-          <h1>Coconut Beach</h1>
-          <p className="lead">
-            A quiet, off-grid beachfront stay for independent travelers who want nature,
-            simplicity, and the sea directly outside.
-          </p>
-          <div className="actions">
-            <a className="button" href="#availability">Check availability</a>
-            <Link className="button secondary" href="/stays">Explore the rooms</Link>
-          </div>
-        </div>
-      </section>
+      <HomeHero />
 
       <AvailabilitySearch />
 
