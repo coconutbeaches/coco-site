@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
+import { Pacifico } from "next/font/google";
 import "./globals.css";
+
+const pacifico = Pacifico({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-pacifico",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Coconut Beach Koh Phangan",
@@ -10,7 +18,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={pacifico.variable}>{children}</body>
     </html>
   );
 }
