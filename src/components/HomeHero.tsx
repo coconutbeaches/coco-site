@@ -35,8 +35,8 @@ export default function HomeHero() {
       </div>
       <div className="hero-shade" aria-hidden="true" />
       <div className="hero-inner">
-        <p className="eyebrow">Koh Phangan · Thailand</p>
         <h1 className="site-wordmark">Coconut Beach</h1>
+        <p className="eyebrow">Koh Phangan · Thailand</p>
       </div>
     </section>
   );
