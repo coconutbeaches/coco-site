@@ -48,6 +48,12 @@ main { min-height: 100vh; }
 .hero-inner { max-width: 760px; padding: 4rem 0; position: relative; z-index: 1; }
 .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 700; }
 h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: .92; margin: .75rem 0 1rem; }
+.site-wordmark {
+  font-family: var(--font-pacifico), cursive;
+  font-weight: 400;
+  letter-spacing: .01em;
+  line-height: 1.08;
+}
 h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin: .4rem 0 1rem; }
 .lead { font-size: clamp(1.15rem, 2.8vw, 1.6rem); line-height: 1.45; max-width: 36rem; }
 .actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
