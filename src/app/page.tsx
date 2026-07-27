@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AvailabilitySearch from "@/components/AvailabilitySearch";
 
 const whatsappUrl = "https://wa.me/66992598178?text=Hello%20Coconut%20Beach%2C%20I%27d%20like%20to%20check%20availability.";
@@ -15,7 +16,7 @@ export default function HomePage() {
           </p>
           <div className="actions">
             <a className="button" href="#availability">Check availability</a>
-            <a className="button secondary" href="#fit">Is it right for you?</a>
+            <Link className="button secondary" href="/stays">Explore the rooms</Link>
           </div>
         </div>
       </section>
@@ -34,7 +35,7 @@ export default function HomePage() {
           </article>
           <article className="card">
             <h2>Book honestly</h2>
-            <p>Every room will include a fast vertical video tour, clear limitations, and exact pricing by date.</p>
+            <p>Every distinct room layout will include clear limitations, representative media, and exact pricing by date.</p>
           </article>
         </div>
       </section>
