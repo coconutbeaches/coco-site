@@ -29,6 +29,77 @@ type SearchResponse = {
   rooms: RoomResult[];
 };
 
+type RoomTypeKey = "ab-bungalow" | "beach-house" | "double-house" | "jungle-house" | "new-house" | "c-bungalow" | "tree-house";
+
+type GroupedRoomResult = {
+  key: RoomTypeKey;
+  label: string;
+  photoUrl: string | null;
+  availableUnits: number;
+  room: RoomResult;
+};
+
+const roomTypeMeta: Record<RoomTypeKey, { label: string; photoUrl: string | null }> = {
+  "ab-bungalow": {
+    label: "1 Bedroom",
+    photoUrl: "https://media.coconut.holiday/1%20Bedroom/CoconutBeachBungalows_02.jpg",
+  },
+  "beach-house": {
+    label: "Beach House",
+    photoUrl: "https://media.coconut.holiday/Beachfront%20House/CoconutBeachBungalows_35.jpg",
+  },
+  "double-house": { label: "Double House", photoUrl: null },
+  "jungle-house": {
+    label: "Jungle House",
+    photoUrl: "https://media.coconut.holiday/Jungle%20House/IMG_0820.jpeg",
+  },
+  "new-house": {
+    label: "New House",
+    photoUrl: "https://media.coconut.holiday/New%20House/IMG_1208.jpeg",
+  },
+  "c-bungalow": { label: "C Bungalow", photoUrl: null },
+  "tree-house": { label: "Tree House", photoUrl: null },
+};
+
+function roomTypeKey(roomCode: string): RoomTypeKey {
+  if (/^[AB]\d+$/.test(roomCode)) return "ab-bungalow";
+  if (/^C\d+$/.test(roomCode)) return "c-bungalow";
+
+  const exact: Record<string, RoomTypeKey> = {
+    BH: "beach-house",
+    DH: "double-house",
+    JH: "jungle-house",
+    NH: "new-house",
+    TH: "tree-house",
+  };
+
+  return exact[roomCode] ?? "ab-bungalow";
+}
+
+function groupRooms(rooms: RoomResult[]): GroupedRoomResult[] {
+  const groups = new Map<RoomTypeKey, GroupedRoomResult>();
+
+  for (const room of rooms) {
+    const key = roomTypeKey(room.room_code);
+    const existing = groups.get(key);
+
+    if (existing) {
+      existing.availableUnits += 1;
+      continue;
+    }
+
+    groups.set(key, {
+      key,
+      label: roomTypeMeta[key].label,
+      photoUrl: roomTypeMeta[key].photoUrl,
+      availableUnits: 1,
+      room,
+    });
+  }
+
+  return Array.from(groups.values());
+}
+
 function isoDate(date: Date) {
   return date.toISOString().slice(0, 10);
 }
@@ -58,6 +129,8 @@ export default function AvailabilitySearch() {
   const [result, setResult] = useState<SearchResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const groupedRooms = useMemo(() => groupRooms(result?.rooms ?? []), [result]);
 
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -121,11 +194,11 @@ export default function AvailabilitySearch() {
       {result && (
         <div className="results">
           <div className="results-summary">
-            <h3>{result.rooms.length ? `${result.rooms.length} rooms available` : "No exact matches"}</h3>
+            <h3>{groupedRooms.length ? `${groupedRooms.length} room types available` : "No exact matches"}</h3>
             <p>{result.nights} nights · {result.adults} adults{result.children ? ` · ${result.children} children` : ""}</p>
           </div>
 
-          {!result.rooms.length && (
+          {!groupedRooms.length && (
             <div className="card notice">
               <h3>Try different dates</h3>
               <p>No room matches this exact combination yet. WhatsApp us and we can look for alternatives.</p>
@@ -133,48 +206,57 @@ export default function AvailabilitySearch() {
           )}
 
           <div className="room-results">
-            {result.rooms.map((room) => {
+            {groupedRooms.map(({ key, label, photoUrl, availableUnits, room }) => {
               const whatsappText = encodeURIComponent(
-                `Hello Coconut Beach, I’m interested in ${room.room_name} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children. The quoted total is ${formatTHB(room.total_thb)}.`,
+                `Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children. The quoted total is ${formatTHB(room.total_thb)}.`,
               );
+
               return (
-                <article className="room-result" key={room.room_code}>
-                  <div>
-                    <p className="room-code">{room.room_code}</p>
-                    <h3>{room.room_name}</h3>
-                    <p className="room-meta">
-                      Up to {room.max_total_guests ?? "—"} guests
-                      {room.view_type ? ` · ${room.view_type} view` : ""}
-                    </p>
-                  </div>
+                <article className="room-result room-result-card" key={key}>
+                  {photoUrl ? (
+                    <img className="room-result-image" src={photoUrl} alt={`${label} at Coconut Beach`} />
+                  ) : (
+                    <div className="room-result-image room-result-placeholder">Photography coming soon</div>
+                  )}
 
-                  <div className="price-block">
-                    <strong>{formatTHB(room.total_thb)}</strong>
-                    <span>Total for {result.nights} nights</span>
-                  </div>
-
-                  {!room.minimum_stay_met && (
-                    <div className="minimum-warning">
-                      Minimum stay is {room.minimum_stay_nights} nights for this arrival date.
+                  <div className="room-result-body">
+                    <div>
+                      <h3>{label}</h3>
+                      <p className="room-meta">
+                        Up to {room.max_total_guests ?? "—"} guests
+                        {room.view_type ? ` · ${room.view_type} view` : ""}
+                      </p>
+                      {availableUnits > 1 && <p className="available-units">{availableUnits} available</p>}
                     </div>
-                  )}
 
-                  {!room.price_complete && (
-                    <div className="minimum-warning">Some nightly rates are not yet available.</div>
-                  )}
+                    <div className="price-block">
+                      <strong>{formatTHB(room.total_thb)}</strong>
+                      <span>Total for {result.nights} nights</span>
+                    </div>
 
-                  <details>
-                    <summary>Nightly price breakdown</summary>
-                    <ul className="rate-list">
-                      {room.nightly_rates.map((night) => (
-                        <li key={night.date}><span>{night.date}</span><strong>{formatTHB(night.rate_thb)}</strong></li>
-                      ))}
-                    </ul>
-                  </details>
+                    {!room.minimum_stay_met && (
+                      <div className="minimum-warning">
+                        Minimum stay is {room.minimum_stay_nights} nights for this arrival date.
+                      </div>
+                    )}
 
-                  <a className="button room-action" href={`https://wa.me/66992598178?text=${whatsappText}`}>
-                    Continue on WhatsApp
-                  </a>
+                    {!room.price_complete && (
+                      <div className="minimum-warning">Some nightly rates are not yet available.</div>
+                    )}
+
+                    <details>
+                      <summary>Nightly price breakdown</summary>
+                      <ul className="rate-list">
+                        {room.nightly_rates.map((night) => (
+                          <li key={night.date}><span>{night.date}</span><strong>{formatTHB(night.rate_thb)}</strong></li>
+                        ))}
+                      </ul>
+                    </details>
+
+                    <a className="button room-action" href={`https://wa.me/66992598178?text=${whatsappText}`}>
+                      Continue on WhatsApp
+                    </a>
+                  </div>
                 </article>
               );
             })}
