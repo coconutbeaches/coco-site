@@ -37,7 +37,7 @@ export default function HomeHero() {
       <div className="hero-shade" aria-hidden="true" />
       <div className="hero-inner">
         <p className="eyebrow">Koh Phangan · Thailand</p>
-        <h1>Coconut Beach</h1>
+        <h1 className="site-wordmark">Coconut Beach</h1>
         <p className="lead">
           A quiet, off-grid beachfront stay for independent travelers who want nature,
           simplicity, and the sea directly outside.
