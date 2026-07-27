@@ -253,7 +253,7 @@ export default function AvailabilitySearch() {
                       </ul>
                     </details>
 
-                    <a className="button room-action" href={`https://wa.me/66992598178?text=${whatsappText}`}>
+                    <a className="button room-action" href={`https://wa.me/66926025572?text=${whatsappText}`}>
                       Continue on WhatsApp
                     </a>
                   </div>
