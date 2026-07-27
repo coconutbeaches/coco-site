@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const heroImages = [
@@ -38,14 +37,6 @@ export default function HomeHero() {
       <div className="hero-inner">
         <p className="eyebrow">Koh Phangan · Thailand</p>
         <h1 className="site-wordmark">Coconut Beach</h1>
-        <p className="lead">
-          A quiet, off-grid beachfront stay for independent travelers who want nature,
-          simplicity, and the sea directly outside.
-        </p>
-        <div className="actions">
-          <a className="button" href="#availability">Check availability</a>
-          <Link className="button secondary" href="/stays">Explore the rooms</Link>
-        </div>
       </div>
     </section>
   );
