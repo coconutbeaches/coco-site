@@ -3,6 +3,7 @@ import { Pacifico } from "next/font/google";
 import "./globals.css";
 import "./hero-overlay.css";
 import "./mobile-fixes.css";
+import "./search-results.css";
 
 const pacifico = Pacifico({
   weight: "400",
