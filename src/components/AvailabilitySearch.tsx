@@ -90,13 +90,7 @@ export default function AvailabilitySearch() {
 
   return (
     <section className="availability-section" id="availability">
-      <div className="availability-heading">
-        <p className="eyebrow">Live availability</p>
-        <h2>Find the right room for your dates</h2>
-        <p>Prices and minimum stays come directly from Coconut Beach’s operating calendar.</p>
-      </div>
-
-      <form className="search-form" onSubmit={search}>
+      <form className="search-form search-form-standalone" onSubmit={search}>
         <label>
           Check-in
           <input type="date" value={checkIn} min={isoDate(new Date())} onChange={(event) => setCheckIn(event.target.value)} required />
@@ -118,7 +112,7 @@ export default function AvailabilitySearch() {
           </select>
         </label>
         <button className="button search-button" disabled={loading} type="submit">
-          {loading ? "Checking…" : "Check availability"}
+          {loading ? "Searching…" : "Search"}
         </button>
       </form>
 
