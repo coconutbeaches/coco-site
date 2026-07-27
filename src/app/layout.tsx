@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Pacifico } from "next/font/google";
 import "./globals.css";
 import "./hero-overlay.css";
+import "./mobile-fixes.css";
 
 const pacifico = Pacifico({
   weight: "400",
