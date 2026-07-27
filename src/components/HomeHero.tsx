@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const heroImages = [
-  "https://media.coconut.holiday/Atmosphere/IMG_1526.jpeg",
+  "https://media.coconut.holiday/Atmosphere/18f18e1e-2e59-4578-a72d-57839a1af04a.jpg",
+  "https://media.coconut.holiday/Atmosphere/69633d3f-afb1-4a3c-9712-a5051117a3b2.png",
   "https://media.coconut.holiday/Atmosphere/IMG_2425.jpeg",
   "https://media.coconut.holiday/Atmosphere/IMG_2578.jpeg",
 ];
