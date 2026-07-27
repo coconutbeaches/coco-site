@@ -1,0 +1,23 @@
+@media (max-width: 600px) {
+  .availability-section,
+  .search-form,
+  .search-form label {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .search-form input,
+  .search-form select {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .search-form input[type="date"] {
+    inline-size: 100%;
+    min-inline-size: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
