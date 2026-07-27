@@ -1,7 +1,7 @@
 import AvailabilitySearch from "@/components/AvailabilitySearch";
 import HomeHero from "@/components/HomeHero";
 
-const whatsappUrl = "https://wa.me/66992598178?text=Hello%20Coconut%20Beach%2C%20I%27d%20like%20to%20check%20availability.";
+const whatsappUrl = "https://wa.me/66926025572?text=Hello%20Coconut%20Beach%2C%20I%27d%20like%20to%20check%20availability.";
 
 export default function HomePage() {
   return (
