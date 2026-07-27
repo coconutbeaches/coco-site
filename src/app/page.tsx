@@ -1,3 +1,5 @@
+import AvailabilitySearch from "@/components/AvailabilitySearch";
+
 const whatsappUrl = "https://wa.me/66992598178?text=Hello%20Coconut%20Beach%2C%20I%27d%20like%20to%20check%20availability.";
 
 export default function HomePage() {
@@ -12,11 +14,13 @@ export default function HomePage() {
             simplicity, and the sea directly outside.
           </p>
           <div className="actions">
-            <a className="button" href={whatsappUrl}>Check availability</a>
+            <a className="button" href="#availability">Check availability</a>
             <a className="button secondary" href="#fit">Is it right for you?</a>
           </div>
         </div>
       </section>
+
+      <AvailabilitySearch />
 
       <section className="section" id="fit">
         <div className="grid">
@@ -37,11 +41,10 @@ export default function HomePage() {
 
       <section className="section">
         <div className="card">
-          <p className="eyebrow">AI-native foundation</p>
-          <h2>One source of truth</h2>
-          <p>
-            Rooms, nightly rates, minimum stays, availability, policies, and future agent tools will all use the same verified Coconut Beach data.
-          </p>
+          <p className="eyebrow">Need help deciding?</p>
+          <h2>Talk to Coconut Beach directly</h2>
+          <p>Share your dates and what kind of stay you want. We’ll help you choose the right room honestly.</p>
+          <a className="button" href={whatsappUrl}>Message us on WhatsApp</a>
         </div>
       </section>
 
