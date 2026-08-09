@@ -4,6 +4,7 @@ import { FormEvent, useMemo, useState } from "react";
 import DatePicker from "@/components/DatePicker";
 import WhatsAppHandoff from "@/components/WhatsAppHandoff";
 import RoomGalleryPreview from "@/components/RoomGalleryPreview";
+import styles from "@/components/AvailabilitySearch.module.css";
 import { roomGalleries } from "@/data/roomGalleries";
 
 type NightlyRate = { date: string; rate_thb: number | null };
@@ -195,10 +196,10 @@ export default function AvailabilitySearch() {
         </label>
 
         {children > 0 && (
-          <div className="child-age-fields" aria-label="Children's ages">
+          <div className={styles.childAgeFields} aria-label="Children's ages">
             {childAges.map((age, index) => (
-              <label className="child-age-field" key={index}>
-                <span className="sr-only">Child {index + 1} age</span>
+              <label className={styles.childAgeField} key={index}>
+                <span className={styles.srOnly}>Child {index + 1} age</span>
                 <select
                   value={age}
                   onChange={(event) => handleChildAgeChange(index, event.target.value)}
