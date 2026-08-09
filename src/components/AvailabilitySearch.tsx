@@ -3,6 +3,8 @@
 import { FormEvent, useMemo, useState } from "react";
 import DatePicker from "@/components/DatePicker";
 import WhatsAppHandoff from "@/components/WhatsAppHandoff";
+import RoomGalleryPreview from "@/components/RoomGalleryPreview";
+import { roomGalleries } from "@/data/roomGalleries";
 
 type NightlyRate = { date: string; rate_thb: number | null };
 type RoomResult = {
@@ -178,7 +180,11 @@ export default function AvailabilitySearch() {
 
               return (
                 <article className="room-result room-result-card" key={key}>
-                  {photoUrl ? <img className="room-result-image" src={photoUrl} alt={`${label} at Coconut Beach`} /> : <div className="room-result-image room-result-placeholder">Photography coming soon</div>}
+                  {photoUrl ? (
+                    <RoomGalleryPreview label={label} coverUrl={photoUrl} images={roomGalleries[key] ?? [photoUrl]} />
+                  ) : (
+                    <div className="room-result-image room-result-placeholder">Photography coming soon</div>
+                  )}
                   <div className="room-result-body">
                     <div>
                       <h3>{label}</h3>
