@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import DatePicker from "@/components/DatePicker";
+import WhatsAppHandoff from "@/components/WhatsAppHandoff";
 
 type NightlyRate = { date: string; rate_thb: number | null };
 type RoomResult = {
@@ -172,6 +173,9 @@ export default function AvailabilitySearch() {
           <div className="room-results">
             {groupedRooms.map(({ key, label, photoUrl, room }) => {
               const whatsappText = encodeURIComponent(`Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children. The quoted total is ${formatTHB(room.total_thb)}.`);
+              const whatsappUrl = `https://wa.me/66926025572?text=${whatsappText}`;
+              const handoffSummary = `${label} · ${result.check_in} → ${result.check_out} · ${result.adults} adults${result.children ? ` · ${result.children} children` : ""} · ${formatTHB(room.total_thb)}`;
+
               return (
                 <article className="room-result room-result-card" key={key}>
                   {photoUrl ? <img className="room-result-image" src={photoUrl} alt={`${label} at Coconut Beach`} /> : <div className="room-result-image room-result-placeholder">Photography coming soon</div>}
@@ -186,7 +190,7 @@ export default function AvailabilitySearch() {
                       <span>Total for {result.nights} nights</span>
                     </div>
                     {!room.price_complete && <div className="minimum-warning">Some nightly rates are not yet available.</div>}
-                    <a className="button room-action" href={`https://wa.me/66926025572?text=${whatsappText}`}>Continue on WhatsApp</a>
+                    <WhatsAppHandoff url={whatsappUrl} summary={handoffSummary} />
                   </div>
                 </article>
               );
