@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Pacifico } from "next/font/google";
+import { Pacifico, Swanky_and_Moo_Moo } from "next/font/google";
 import "./globals.css";
 import "./hero-overlay.css";
 import "./mobile-fixes.css";
@@ -12,6 +12,13 @@ const pacifico = Pacifico({
   display: "swap",
 });
 
+const swankyAndMooMoo = Swanky_and_Moo_Moo({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-swanky-and-moo-moo",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Coconut Beach Koh Phangan",
   description:
@@ -21,7 +28,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={pacifico.variable}>{children}</body>
+      <body className={`${pacifico.variable} ${swankyAndMooMoo.variable}`}>{children}</body>
     </html>
   );
 }
