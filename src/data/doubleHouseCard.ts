@@ -1,0 +1,1 @@
+export const doubleHouseCardPhoto = "data:image/webp;base64,UklGRtotAQBXRUJQVlA4IM4tAQAQcQ...";
