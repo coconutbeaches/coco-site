@@ -67,6 +67,12 @@ function groupRooms(rooms: RoomResult[]): GroupedRoomResult[] {
 }
 
 function isoDate(date: Date) { return date.toISOString().slice(0, 10); }
+function nextDayIso(value: string) {
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  date.setDate(date.getDate() + 1);
+  return isoDate(date);
+}
 
 function formatTHB(value: number | null) {
   if (value === null) return "Price unavailable";
@@ -92,6 +98,11 @@ export default function AvailabilitySearch() {
 
   const groupedRooms = useMemo(() => groupRooms(result?.rooms ?? []), [result]);
   const today = isoDate(new Date());
+
+  function handleCheckInChange(value: string) {
+    setCheckIn(value);
+    if (!checkOut || checkOut <= value) setCheckOut(nextDayIso(value));
+  }
 
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -121,11 +132,11 @@ export default function AvailabilitySearch() {
       <form className="search-form search-form-standalone" onSubmit={search}>
         <label>
           Check-in
-          <DatePicker value={checkIn} min={today} onChange={setCheckIn} ariaLabel="Choose check-in date" tone="start" />
+          <DatePicker value={checkIn} min={today} onChange={handleCheckInChange} ariaLabel="Choose check-in date" tone="start" />
         </label>
         <label>
           Check-out
-          <DatePicker value={checkOut} min={checkIn || today} onChange={setCheckOut} ariaLabel="Choose check-out date" tone="end" />
+          <DatePicker value={checkOut} min={nextDayIso(checkIn || today)} onChange={setCheckOut} ariaLabel="Choose check-out date" tone="end" />
         </label>
         <label>
           Adults
