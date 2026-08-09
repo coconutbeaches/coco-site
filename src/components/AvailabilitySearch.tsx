@@ -86,6 +86,19 @@ function nextDayIso(value: string) {
   return isoDate(date);
 }
 
+function formatStayDates(checkIn: string, checkOut: string) {
+  const [inYear, inMonth, inDay] = checkIn.split("-").map(Number);
+  const [outYear, outMonth, outDay] = checkOut.split("-").map(Number);
+  const arrival = new Date(inYear, inMonth - 1, inDay);
+  const departure = new Date(outYear, outMonth - 1, outDay);
+  const monthDay = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
+  if (inYear === outYear && inMonth === outMonth) {
+    const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(arrival);
+    return `${month} ${inDay}–${outDay}`;
+  }
+  return `${monthDay.format(arrival)}–${monthDay.format(departure)}`;
+}
+
 function formatTHB(value: number | null) {
   if (value === null) return "Price unavailable";
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "THB", maximumFractionDigits: 0 }).format(value);
@@ -170,7 +183,7 @@ export default function AvailabilitySearch() {
       {result && (
         <div className="results">
           <div className="results-summary">
-            <h3>{groupedRooms.length ? `${groupedRooms.length} room types available` : "No exact matches"}</h3>
+            <h3>{groupedRooms.length ? `Available options for ${formatStayDates(result.check_in, result.check_out)}` : "No exact matches"}</h3>
             <p>{result.nights} nights · {result.adults} adults{result.children ? ` · ${result.children} children` : ""}</p>
           </div>
 
