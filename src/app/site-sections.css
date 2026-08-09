@@ -10,30 +10,45 @@
 }
 
 .hero-location {
-  margin: 0;
+  margin: 0 0 .35rem;
   color: #fff;
   white-space: nowrap;
 }
 
-.hero-nav {
+.hero-nav,
+.page-hero-nav {
   display: flex;
-  gap: 1.15rem;
+  align-items: center;
+  gap: .7rem;
   flex-wrap: wrap;
   margin-top: .7rem;
   color: #fff;
 }
 
-.hero-nav a {
+.hero-nav a,
+.page-hero-nav a {
   text-decoration: none;
   color: inherit;
   opacity: .94;
 }
 
 .hero-nav a:hover,
-.hero-nav a:focus-visible {
+.hero-nav a:focus-visible,
+.page-hero-nav a:hover,
+.page-hero-nav a:focus-visible {
   opacity: 1;
   text-decoration: underline;
   text-underline-offset: .25rem;
+}
+
+.page-hero-nav span,
+.hero-nav span {
+  opacity: .8;
+}
+
+.service-grid .card h2 {
+  font-size: clamp(1.55rem, 2.8vw, 2.25rem);
+  line-height: 1.08;
 }
 
 .review-section {
@@ -96,9 +111,14 @@
     font-size: .68rem;
   }
 
-  .hero-nav {
-    gap: .85rem;
+  .hero-nav,
+  .page-hero-nav {
+    gap: .55rem;
     margin-top: .55rem;
     font-size: .7rem;
+  }
+
+  .service-grid .card h2 {
+    font-size: 1.65rem;
   }
 }
