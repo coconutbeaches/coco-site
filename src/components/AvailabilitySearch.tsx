@@ -43,7 +43,7 @@ type GroupedRoomResult = {
 const roomTypeMeta: Record<RoomTypeKey, { label: string; photoUrl: string | null }> = {
   "ab-bungalow": { label: "1 Bedroom", photoUrl: "https://media.coconut.holiday/1%20Bedroom/CoconutBeachBungalows_02.jpg" },
   "beach-house": { label: "Beach House", photoUrl: "https://media.coconut.holiday/Beachfront%20House/CoconutBeachBungalows_35.jpg" },
-  "double-house": { label: "Double House", photoUrl: null },
+  "double-house": { label: "Double House", photoUrl: "https://media.coconut.holiday/Double%20House/1569940530.428_c23c9867-d6a5-4079-9399-e3a3fd2fe24c.jpg" },
   "jungle-house": { label: "Jungle House", photoUrl: "https://media.coconut.holiday/Jungle%20House/IMG_0820.jpeg" },
   "new-house": { label: "New House", photoUrl: "https://media.coconut.holiday/New%20House/IMG_1208.jpeg" },
   "c-bungalow": { label: "C Bungalow", photoUrl: null },
