@@ -9,6 +9,7 @@ import "./date-picker.css";
 import "./whatsapp-handoff.css";
 import "./room-gallery.css";
 import "./site-sections.css";
+import "./content-heroes.css";
 
 const pacifico = Pacifico({
   weight: "400",
