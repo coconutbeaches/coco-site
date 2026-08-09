@@ -30,6 +30,7 @@ function makeWhatsAppWebUrl(url: string) {
 export default function WhatsAppHandoff({
   url,
   label = "Continue on WhatsApp",
+  summary,
 }: WhatsAppHandoffProps) {
   const [open, setOpen] = useState(false);
   const webUrl = useMemo(() => makeWhatsAppWebUrl(url), [url]);
@@ -84,7 +85,11 @@ export default function WhatsAppHandoff({
               ×
             </button>
 
-            <h3 id="whatsapp-modal-title">Scan to open WhatsApp</h3>
+            <div className="whatsapp-modal-copy">
+              <h3 id="whatsapp-modal-title">Scan to open WhatsApp with your phone.</h3>
+              <p>Your room, dates, guest count and quoted total are already included.</p>
+              {summary && <p className="whatsapp-modal-summary">{summary}</p>}
+            </div>
 
             <div className="whatsapp-qr-shell" aria-label="WhatsApp booking QR code">
               <QRCodeSVG
