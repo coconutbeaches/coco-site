@@ -7,6 +7,7 @@ type DatePickerProps = {
   min?: string;
   onChange: (value: string) => void;
   ariaLabel: string;
+  tone?: "start" | "end";
 };
 
 const monthFormatter = new Intl.DateTimeFormat("en-US", {
@@ -36,7 +37,7 @@ function sameDay(a: Date, b: Date) {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
 
-export default function DatePicker({ value, min, onChange, ariaLabel }: DatePickerProps) {
+export default function DatePicker({ value, min, onChange, ariaLabel, tone = "start" }: DatePickerProps) {
   const selected = useMemo(() => parseIso(value), [value]);
   const minimum = useMemo(() => (min ? parseIso(min) : null), [min]);
   const [open, setOpen] = useState(false);
@@ -84,7 +85,7 @@ export default function DatePicker({ value, min, onChange, ariaLabel }: DatePick
     : false;
 
   return (
-    <div className="date-picker" ref={rootRef}>
+    <div className={`date-picker date-picker-${tone}`} ref={rootRef}>
       <button
         type="button"
         className="date-picker-trigger"
