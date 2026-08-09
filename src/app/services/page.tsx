@@ -1,3 +1,4 @@
+// Deployment sync: ensures latest Services and Gallery navigation reaches production.
 const servicesHero = "https://media.coconut.holiday/Atmosphere/69633d3f-afb1-4a3c-9712-a5051117a3b2.png";
 
 const services = [
