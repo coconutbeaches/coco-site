@@ -6,6 +6,10 @@
 }
 
 .search-form input,
-.search-form select {
+.search-form select,
+.search-form .date-picker,
+.search-form .date-picker button,
+.search-form .date-picker span,
+.search-form .date-picker strong {
   font-family: Arial, Helvetica, sans-serif;
 }
