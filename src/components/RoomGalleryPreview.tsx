@@ -11,23 +11,54 @@ type RoomGalleryPreviewProps = {
   label: string;
   coverUrl: string;
   images: string[];
+  mobileImages?: string[];
+  desktopImages?: string[];
   videoUrl?: string | null;
 };
 
-export default function RoomGalleryPreview({ label, coverUrl, images, videoUrl }: RoomGalleryPreviewProps) {
-  const gallery = useMemo<GalleryItem[]>(() => {
-    const uniqueImages = Array.from(new Set([coverUrl, ...images].filter(Boolean)));
-    const items: GalleryItem[] = uniqueImages.map((src) => ({ type: "image", src }));
-    if (videoUrl) items.splice(Math.min(3, items.length), 0, { type: "video", src: videoUrl });
-    return items;
-  }, [coverUrl, images, videoUrl]);
+function uniqueImages(coverUrl: string, images: string[]) {
+  return Array.from(new Set([coverUrl, ...images].filter(Boolean)));
+}
 
+export default function RoomGalleryPreview({
+  label,
+  coverUrl,
+  images,
+  mobileImages,
+  desktopImages,
+  videoUrl,
+}: RoomGalleryPreviewProps) {
+  const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    const media = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener?.("change", update);
+    return () => media.removeEventListener?.("change", update);
+  }, []);
+
+  const gallery = useMemo<GalleryItem[]>(() => {
+    const selectedImages = isMobile
+      ? (mobileImages ?? images)
+      : (desktopImages ?? images);
+    const orderedImages = uniqueImages(coverUrl, selectedImages);
+    const items: GalleryItem[] = orderedImages.map((src) => ({ type: "image", src }));
+
+    if (videoUrl) {
+      // Mobile: item #3. Desktop: item #5. This gives the video time to buffer
+      // without forcing it ahead of the first room photos.
+      const desiredIndex = isMobile ? 2 : 4;
+      items.splice(Math.min(desiredIndex, items.length), 0, { type: "video", src: videoUrl });
+    }
+
+    return items;
+  }, [coverUrl, desktopImages, images, isMobile, mobileImages, videoUrl]);
 
   function showAt(nextIndex: number) {
     setIndex((nextIndex + gallery.length) % gallery.length);
@@ -61,9 +92,15 @@ export default function RoomGalleryPreview({ label, coverUrl, images, videoUrl }
     };
   }, [open, index, gallery.length]);
 
+  useEffect(() => {
+    if (!open) return;
+    // Keep a valid item selected if the viewport changes while the gallery is open.
+    setIndex((currentIndex) => Math.min(currentIndex, Math.max(gallery.length - 1, 0)));
+  }, [gallery.length, open]);
+
   const current = gallery[index];
 
-  const lightbox = open ? (
+  const lightbox = open && current ? (
     <div
       className="room-gallery-lightbox"
       role="dialog"
