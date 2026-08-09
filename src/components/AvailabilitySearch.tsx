@@ -35,7 +35,6 @@ type GroupedRoomResult = {
   key: RoomTypeKey;
   label: string;
   photoUrl: string | null;
-  availableUnits: number;
   room: RoomResult;
 };
 
@@ -81,18 +80,12 @@ function groupRooms(rooms: RoomResult[]): GroupedRoomResult[] {
 
   for (const room of rooms) {
     const key = roomTypeKey(room.room_code);
-    const existing = groups.get(key);
-
-    if (existing) {
-      existing.availableUnits += 1;
-      continue;
-    }
+    if (groups.has(key)) continue;
 
     groups.set(key, {
       key,
       label: roomTypeMeta[key].label,
       photoUrl: roomTypeMeta[key].photoUrl,
-      availableUnits: 1,
       room,
     });
   }
@@ -206,7 +199,7 @@ export default function AvailabilitySearch() {
           )}
 
           <div className="room-results">
-            {groupedRooms.map(({ key, label, photoUrl, availableUnits, room }) => {
+            {groupedRooms.map(({ key, label, photoUrl, room }) => {
               const whatsappText = encodeURIComponent(
                 `Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children. The quoted total is ${formatTHB(room.total_thb)}.`,
               );
@@ -226,7 +219,9 @@ export default function AvailabilitySearch() {
                         Up to {room.max_total_guests ?? "—"} guests
                         {room.view_type ? ` · ${room.view_type} view` : ""}
                       </p>
-                      {availableUnits > 1 && <p className="available-units">{availableUnits} available</p>}
+                      {room.minimum_stay_nights !== null && (
+                        <p className="minimum-stay-inline">Min {room.minimum_stay_nights} nights</p>
+                      )}
                     </div>
 
                     <div className="price-block">
@@ -234,24 +229,9 @@ export default function AvailabilitySearch() {
                       <span>Total for {result.nights} nights</span>
                     </div>
 
-                    {!room.minimum_stay_met && (
-                      <div className="minimum-warning">
-                        Minimum stay is {room.minimum_stay_nights} nights for this arrival date.
-                      </div>
-                    )}
-
                     {!room.price_complete && (
                       <div className="minimum-warning">Some nightly rates are not yet available.</div>
                     )}
-
-                    <details>
-                      <summary>Nightly price breakdown</summary>
-                      <ul className="rate-list">
-                        {room.nightly_rates.map((night) => (
-                          <li key={night.date}><span>{night.date}</span><strong>{formatTHB(night.rate_thb)}</strong></li>
-                        ))}
-                      </ul>
-                    </details>
 
                     <a className="button room-action" href={`https://wa.me/66926025572?text=${whatsappText}`}>
                       Continue on WhatsApp
