@@ -1,11 +1,14 @@
 const bookingReviews = "https://www.booking.com/hotel/th/coconut-beach-bungalows.html#tab-reviews";
 const airbnbReviews = "https://www.airbnb.com/users/show/766649";
+const aboutHero = "https://media.coconut.holiday/Atmosphere/IMG_2425.jpeg";
 
 export default function AboutPage() {
   return (
     <main>
-      <section className="page-hero">
-        <div className="section compact-hero">
+      <section className="content-photo-hero">
+        <img src={aboutHero} alt="Coconut Beach and Haad Khom on Koh Phangan" />
+        <div className="content-photo-hero-shade" />
+        <div className="content-photo-hero-copy">
           <a className="back-link" href="/">← Back to booking</a>
           <p className="eyebrow">Koh Phangan · Thailand</p>
           <h1 className="site-wordmark">About Coconut Beach</h1>
