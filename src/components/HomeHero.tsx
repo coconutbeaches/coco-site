@@ -41,8 +41,8 @@ export default function HomeHero() {
         </div>
         <nav className="hero-nav eyebrow" aria-label="Main navigation">
           <a href="/about">About</a>
-          <a href="/#services">Services</a>
-          <a href="/#gallery">Gallery</a>
+          <a href="/services">Services</a>
+          <a href="/gallery">Gallery</a>
         </nav>
       </div>
     </section>
