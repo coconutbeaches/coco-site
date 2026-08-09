@@ -6,6 +6,7 @@ import "./mobile-fixes.css";
 import "./search-results.css";
 import "./availability-font.css";
 import "./date-picker.css";
+import "./whatsapp-handoff.css";
 
 const pacifico = Pacifico({
   weight: "400",
