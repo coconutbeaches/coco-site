@@ -3,14 +3,25 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+type GalleryItem =
+  | { type: "image"; src: string }
+  | { type: "video"; src: string };
+
 type RoomGalleryPreviewProps = {
   label: string;
   coverUrl: string;
   images: string[];
+  videoUrl?: string | null;
 };
 
-export default function RoomGalleryPreview({ label, coverUrl, images }: RoomGalleryPreviewProps) {
-  const gallery = useMemo(() => Array.from(new Set([coverUrl, ...images].filter(Boolean))), [coverUrl, images]);
+export default function RoomGalleryPreview({ label, coverUrl, images, videoUrl }: RoomGalleryPreviewProps) {
+  const gallery = useMemo<GalleryItem[]>(() => {
+    const uniqueImages = Array.from(new Set([coverUrl, ...images].filter(Boolean)));
+    const items: GalleryItem[] = uniqueImages.map((src) => ({ type: "image", src }));
+    if (videoUrl) items.splice(Math.min(3, items.length), 0, { type: "video", src: videoUrl });
+    return items;
+  }, [coverUrl, images, videoUrl]);
+
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -23,7 +34,7 @@ export default function RoomGalleryPreview({ label, coverUrl, images }: RoomGall
   }
 
   function openGallery() {
-    const coverIndex = gallery.indexOf(coverUrl);
+    const coverIndex = gallery.findIndex((item) => item.type === "image" && item.src === coverUrl);
     setIndex(coverIndex >= 0 ? coverIndex : 0);
     setOpen(true);
   }
@@ -50,12 +61,14 @@ export default function RoomGalleryPreview({ label, coverUrl, images }: RoomGall
     };
   }, [open, index, gallery.length]);
 
+  const current = gallery[index];
+
   const lightbox = open ? (
     <div
       className="room-gallery-lightbox"
       role="dialog"
       aria-modal="true"
-      aria-label={`${label} photo gallery`}
+      aria-label={`${label} photo and video gallery`}
       onClick={() => setOpen(false)}
     >
       <div className="room-gallery-shell" onClick={(event) => event.stopPropagation()}>
@@ -78,27 +91,42 @@ export default function RoomGalleryPreview({ label, coverUrl, images }: RoomGall
             touchStartX.current = null;
           }}
         >
-          <img src={gallery[index]} alt={`${label} photo ${index + 1}`} />
+          {current.type === "video" ? (
+            <video
+              className="room-gallery-video"
+              src={current.src}
+              controls
+              playsInline
+              preload="metadata"
+              aria-label={`${label} walkthrough video`}
+            />
+          ) : (
+            <img src={current.src} alt={`${label} photo ${index + 1}`} />
+          )}
           {gallery.length > 1 && (
             <>
-              <button type="button" className="room-gallery-nav prev" onClick={() => showAt(index - 1)} aria-label="Previous photo">‹</button>
-              <button type="button" className="room-gallery-nav next" onClick={() => showAt(index + 1)} aria-label="Next photo">›</button>
+              <button type="button" className="room-gallery-nav prev" onClick={() => showAt(index - 1)} aria-label="Previous item">‹</button>
+              <button type="button" className="room-gallery-nav next" onClick={() => showAt(index + 1)} aria-label="Next item">›</button>
             </>
           )}
         </div>
 
         {gallery.length > 1 && (
           <div className="room-gallery-thumbs" aria-label="Gallery thumbnails">
-            {gallery.map((image, imageIndex) => (
+            {gallery.map((item, itemIndex) => (
               <button
                 type="button"
-                key={image}
-                className={imageIndex === index ? "active" : ""}
-                onClick={() => setIndex(imageIndex)}
-                aria-label={`View photo ${imageIndex + 1}`}
-                aria-current={imageIndex === index ? "true" : undefined}
+                key={`${item.type}-${item.src}`}
+                className={`${itemIndex === index ? "active" : ""}${item.type === "video" ? " video-thumb" : ""}`}
+                onClick={() => setIndex(itemIndex)}
+                aria-label={item.type === "video" ? "View walkthrough video" : `View photo ${itemIndex + 1}`}
+                aria-current={itemIndex === index ? "true" : undefined}
               >
-                <img src={image} alt="" loading="lazy" />
+                {item.type === "video" ? (
+                  <span className="room-gallery-video-thumb" aria-hidden="true">▶</span>
+                ) : (
+                  <img src={item.src} alt="" loading="lazy" />
+                )}
               </button>
             ))}
           </div>
@@ -116,7 +144,7 @@ export default function RoomGalleryPreview({ label, coverUrl, images }: RoomGall
         aria-label={`Open ${label} photo gallery`}
       >
         <img className="room-result-image" src={coverUrl} alt={`${label} at Coconut Beach`} />
-        {gallery.length > 1 && <span className="room-gallery-badge">View {gallery.length} photos</span>}
+        {gallery.length > 1 && <span className="room-gallery-badge">View {gallery.length} items</span>}
       </button>
       {mounted && lightbox ? createPortal(lightbox, document.body) : null}
     </>
