@@ -153,7 +153,6 @@ export default function RoomGalleryPreview({ label, coverUrl, images, videoUrl }
         aria-label={`Open ${label} photo gallery`}
       >
         <img className="room-result-image" src={coverUrl} alt={`${label} at Coconut Beach`} />
-        {gallery.length > 1 && <span className="room-gallery-badge">View {gallery.length} items</span>}
       </button>
       {mounted && lightbox ? createPortal(lightbox, document.body) : null}
     </>
