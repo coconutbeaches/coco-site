@@ -26,12 +26,11 @@ export default function ServicesPage() {
         <img src={servicesHero} alt="Coconut Beach on Koh Phangan" />
         <div className="content-photo-hero-shade" />
         <div className="content-photo-hero-copy">
-          <a className="back-link" href="/">← Back to booking</a>
           <p className="eyebrow">Koh Phangan · Thailand</p>
           <h1 className="site-wordmark">Services</h1>
-          <nav className="page-hero-nav eyebrow" aria-label="Site sections">
+          <nav className="hero-nav eyebrow" aria-label="Site sections">
             <a href="/about">About</a><span aria-hidden="true">·</span>
-            <a href="/services">Services</a><span aria-hidden="true">·</span>
+            <a href="/">Book</a><span aria-hidden="true">·</span>
             <a href="/gallery">Gallery</a>
           </nav>
         </div>
