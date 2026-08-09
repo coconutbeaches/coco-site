@@ -35,13 +35,13 @@ export default function HomeHero() {
       </div>
       <div className="hero-shade" aria-hidden="true" />
       <div className="hero-inner">
-        <div className="hero-brand-row">
-          <h1 className="site-wordmark">Coconut Beach</h1>
-          <p className="eyebrow hero-location">Koh Phangan · Thailand</p>
-        </div>
+        <p className="eyebrow hero-location">Koh Phangan · Thailand</p>
+        <h1 className="site-wordmark">Coconut Beach</h1>
         <nav className="hero-nav eyebrow" aria-label="Main navigation">
           <a href="/about">About</a>
+          <span aria-hidden="true">·</span>
           <a href="/services">Services</a>
+          <span aria-hidden="true">·</span>
           <a href="/gallery">Gallery</a>
         </nav>
       </div>
