@@ -40,23 +40,11 @@ type GroupedRoomResult = {
 };
 
 const roomTypeMeta: Record<RoomTypeKey, { label: string; photoUrl: string | null }> = {
-  "ab-bungalow": {
-    label: "1 Bedroom",
-    photoUrl: "https://media.coconut.holiday/1%20Bedroom/CoconutBeachBungalows_02.jpg",
-  },
-  "beach-house": {
-    label: "Beach House",
-    photoUrl: "https://media.coconut.holiday/Beachfront%20House/CoconutBeachBungalows_35.jpg",
-  },
+  "ab-bungalow": { label: "1 Bedroom", photoUrl: "https://media.coconut.holiday/1%20Bedroom/CoconutBeachBungalows_02.jpg" },
+  "beach-house": { label: "Beach House", photoUrl: "https://media.coconut.holiday/Beachfront%20House/CoconutBeachBungalows_35.jpg" },
   "double-house": { label: "Double House", photoUrl: null },
-  "jungle-house": {
-    label: "Jungle House",
-    photoUrl: "https://media.coconut.holiday/Jungle%20House/IMG_0820.jpeg",
-  },
-  "new-house": {
-    label: "New House",
-    photoUrl: "https://media.coconut.holiday/New%20House/IMG_1208.jpeg",
-  },
+  "jungle-house": { label: "Jungle House", photoUrl: "https://media.coconut.holiday/Jungle%20House/IMG_0820.jpeg" },
+  "new-house": { label: "New House", photoUrl: "https://media.coconut.holiday/New%20House/IMG_1208.jpeg" },
   "c-bungalow": { label: "C Bungalow", photoUrl: null },
   "tree-house": { label: "Tree House", photoUrl: null },
 };
@@ -64,47 +52,25 @@ const roomTypeMeta: Record<RoomTypeKey, { label: string; photoUrl: string | null
 function roomTypeKey(roomCode: string): RoomTypeKey {
   if (/^[AB]\d+$/.test(roomCode)) return "ab-bungalow";
   if (/^C\d+$/.test(roomCode)) return "c-bungalow";
-
-  const exact: Record<string, RoomTypeKey> = {
-    BH: "beach-house",
-    DH: "double-house",
-    JH: "jungle-house",
-    NH: "new-house",
-    TH: "tree-house",
-  };
-
+  const exact: Record<string, RoomTypeKey> = { BH: "beach-house", DH: "double-house", JH: "jungle-house", NH: "new-house", TH: "tree-house" };
   return exact[roomCode] ?? "ab-bungalow";
 }
 
 function groupRooms(rooms: RoomResult[]): GroupedRoomResult[] {
   const groups = new Map<RoomTypeKey, GroupedRoomResult>();
-
   for (const room of rooms) {
     const key = roomTypeKey(room.room_code);
     if (groups.has(key)) continue;
-
-    groups.set(key, {
-      key,
-      label: roomTypeMeta[key].label,
-      photoUrl: roomTypeMeta[key].photoUrl,
-      room,
-    });
+    groups.set(key, { key, label: roomTypeMeta[key].label, photoUrl: roomTypeMeta[key].photoUrl, room });
   }
-
   return Array.from(groups.values());
 }
 
-function isoDate(date: Date) {
-  return date.toISOString().slice(0, 10);
-}
+function isoDate(date: Date) { return date.toISOString().slice(0, 10); }
 
 function formatTHB(value: number | null) {
   if (value === null) return "Price unavailable";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "THB",
-    maximumFractionDigits: 0,
-  }).format(value);
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "THB", maximumFractionDigits: 0 }).format(value);
 }
 
 export default function AvailabilitySearch() {
@@ -131,7 +97,6 @@ export default function AvailabilitySearch() {
     event.preventDefault();
     setError(null);
     setResult(null);
-
     if (!checkIn || !checkOut || checkOut <= checkIn) {
       setError("Check-out must be after check-in.");
       return;
@@ -139,12 +104,7 @@ export default function AvailabilitySearch() {
 
     setLoading(true);
     try {
-      const params = new URLSearchParams({
-        checkIn,
-        checkOut,
-        adults: String(adults),
-        children: String(children),
-      });
+      const params = new URLSearchParams({ checkIn, checkOut, adults: String(adults), children: String(children) });
       const response = await fetch(`/api/availability?${params}`, { cache: "no-store" });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "Could not check availability.");
@@ -161,11 +121,11 @@ export default function AvailabilitySearch() {
       <form className="search-form search-form-standalone" onSubmit={search}>
         <label>
           Check-in
-          <DatePicker value={checkIn} min={today} onChange={setCheckIn} ariaLabel="Choose check-in date" />
+          <DatePicker value={checkIn} min={today} onChange={setCheckIn} ariaLabel="Choose check-in date" tone="start" />
         </label>
         <label>
           Check-out
-          <DatePicker value={checkOut} min={checkIn || today} onChange={setCheckOut} ariaLabel="Choose check-out date" />
+          <DatePicker value={checkOut} min={checkIn || today} onChange={setCheckOut} ariaLabel="Choose check-out date" tone="end" />
         </label>
         <label>
           Adults
@@ -179,9 +139,7 @@ export default function AvailabilitySearch() {
             {[0, 1, 2, 3, 4].map((value) => <option key={value}>{value}</option>)}
           </select>
         </label>
-        <button className="button search-button" disabled={loading} type="submit">
-          {loading ? "Searching…" : "Search"}
-        </button>
+        <button className="button search-button" disabled={loading} type="submit">{loading ? "Searching…" : "Search"}</button>
       </form>
 
       {error && <div className="search-message error-message">{error}</div>}
@@ -202,42 +160,22 @@ export default function AvailabilitySearch() {
 
           <div className="room-results">
             {groupedRooms.map(({ key, label, photoUrl, room }) => {
-              const whatsappText = encodeURIComponent(
-                `Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children. The quoted total is ${formatTHB(room.total_thb)}.`,
-              );
-
+              const whatsappText = encodeURIComponent(`Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children. The quoted total is ${formatTHB(room.total_thb)}.`);
               return (
                 <article className="room-result room-result-card" key={key}>
-                  {photoUrl ? (
-                    <img className="room-result-image" src={photoUrl} alt={`${label} at Coconut Beach`} />
-                  ) : (
-                    <div className="room-result-image room-result-placeholder">Photography coming soon</div>
-                  )}
-
+                  {photoUrl ? <img className="room-result-image" src={photoUrl} alt={`${label} at Coconut Beach`} /> : <div className="room-result-image room-result-placeholder">Photography coming soon</div>}
                   <div className="room-result-body">
                     <div>
                       <h3>{label}</h3>
-                      <p className="room-meta">
-                        Up to {room.max_total_guests ?? "—"} guests
-                        {room.view_type ? ` · ${room.view_type} view` : ""}
-                      </p>
-                      {room.minimum_stay_nights !== null && (
-                        <p className="minimum-stay-inline">Min {room.minimum_stay_nights} nights</p>
-                      )}
+                      <p className="room-meta">Up to {room.max_total_guests ?? "—"} guests{room.view_type ? ` · ${room.view_type} view` : ""}</p>
+                      {room.minimum_stay_nights !== null && <p className="minimum-stay-inline">Min {room.minimum_stay_nights} nights</p>}
                     </div>
-
                     <div className="price-block">
                       <strong>{formatTHB(room.total_thb)}</strong>
                       <span>Total for {result.nights} nights</span>
                     </div>
-
-                    {!room.price_complete && (
-                      <div className="minimum-warning">Some nightly rates are not yet available.</div>
-                    )}
-
-                    <a className="button room-action" href={`https://wa.me/66926025572?text=${whatsappText}`}>
-                      Continue on WhatsApp
-                    </a>
+                    {!room.price_complete && <div className="minimum-warning">Some nightly rates are not yet available.</div>}
+                    <a className="button room-action" href={`https://wa.me/66926025572?text=${whatsappText}`}>Continue on WhatsApp</a>
                   </div>
                 </article>
               );
