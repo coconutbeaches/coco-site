@@ -26,9 +26,9 @@ export default function GalleryPage() {
           <p className="eyebrow">Koh Phangan · Thailand</p>
           <h1 className="site-wordmark">Gallery</h1>
           <nav className="hero-nav eyebrow" aria-label="Site sections">
+            <a href="/">Book</a><span aria-hidden="true">·</span>
             <a href="/about">About</a><span aria-hidden="true">·</span>
-            <a href="/services">Services</a><span aria-hidden="true">·</span>
-            <a href="/">Book</a>
+            <a href="/services">Services</a>
           </nav>
         </div>
       </section>
