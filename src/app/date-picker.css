@@ -10,10 +10,10 @@
   align-items: center;
   justify-content: space-between;
   gap: .75rem;
-  padding: .7rem .85rem;
-  border: 1px solid var(--line);
-  border-radius: .9rem;
-  background: white;
+  padding: .72rem .9rem;
+  border: 1px solid rgba(23, 50, 43, .12);
+  border-radius: 1rem;
+  background: #fffdf8;
   color: var(--ink);
   font-size: .88rem;
   cursor: pointer;
@@ -22,14 +22,14 @@
 }
 
 .date-picker-trigger:hover {
-  background: #fffefa;
-  border-color: rgba(23, 50, 43, .28);
+  background: #fffaf2;
+  border-color: rgba(23, 50, 43, .24);
 }
 
 .date-picker-trigger:focus-visible {
   outline: none;
   border-color: var(--coral);
-  box-shadow: 0 0 0 3px rgba(234, 91, 89, .14);
+  box-shadow: 0 0 0 3px rgba(234, 91, 89, .12);
 }
 
 .date-picker-trigger svg {
@@ -41,26 +41,25 @@
   stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: .65;
+  opacity: .58;
 }
 
 .date-picker-popover {
   position: absolute;
   z-index: 30;
-  top: calc(100% + .5rem);
+  top: calc(100% + .55rem);
   left: 0;
-  width: min(320px, calc(100vw - 2rem));
-  padding: 1rem;
-  border: 1px solid rgba(23, 50, 43, .11);
-  border-radius: 1.35rem;
-  background: rgba(255, 253, 248, .98);
-  box-shadow: 0 22px 60px rgba(23, 50, 43, .2);
-  backdrop-filter: blur(16px);
+  width: min(326px, calc(100vw - 2rem));
+  padding: 1rem 1rem 1.05rem;
+  border: 1px solid rgba(23, 50, 43, .08);
+  border-radius: 1.6rem;
+  background: #fff9ef;
+  box-shadow: 0 22px 60px rgba(23, 50, 43, .18);
 }
 
 .date-picker-header {
   display: grid;
-  grid-template-columns: 38px 1fr 38px;
+  grid-template-columns: 40px 1fr 40px;
   align-items: center;
   gap: .5rem;
   margin-bottom: .85rem;
@@ -68,29 +67,32 @@
 
 .date-picker-header strong {
   text-align: center;
-  font-size: .96rem;
+  font-size: .98rem;
+  letter-spacing: -.01em;
 }
 
 .date-picker-nav {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   display: grid;
   place-items: center;
   border: 0;
   border-radius: 999px;
-  background: transparent;
+  background: #fff3e3;
   color: var(--ink);
-  font-size: 1.65rem;
+  font-size: 1.6rem;
   line-height: 1;
   cursor: pointer;
+  transition: background .12s ease, transform .12s ease;
 }
 
 .date-picker-nav:hover:not(:disabled) {
-  background: rgba(23, 107, 100, .08);
+  background: #ffe6d7;
+  transform: translateY(-1px);
 }
 
 .date-picker-nav:disabled {
-  opacity: .25;
+  opacity: .28;
   cursor: not-allowed;
 }
 
@@ -101,16 +103,16 @@
 }
 
 .date-picker-weekdays {
-  margin-bottom: .3rem;
+  margin-bottom: .32rem;
 }
 
 .date-picker-weekdays span {
   display: grid;
   place-items: center;
   height: 30px;
-  font-size: .72rem;
-  font-weight: 700;
-  opacity: .5;
+  font-size: .7rem;
+  font-weight: 800;
+  opacity: .48;
 }
 
 .date-picker-day {
@@ -124,35 +126,42 @@
   color: var(--ink);
   font-size: .82rem;
   cursor: pointer;
-  transition: background .12s ease, color .12s ease, transform .12s ease;
+  transition: background .12s ease, color .12s ease, transform .12s ease, box-shadow .12s ease;
 }
 
 .date-picker-day:hover:not(:disabled):not(.selected) {
-  background: rgba(23, 107, 100, .09);
+  background: #ffecdd;
   transform: translateY(-1px);
 }
 
 .date-picker-day.outside {
-  opacity: .33;
+  opacity: .3;
 }
 
-.date-picker-day.selected {
-  background: var(--coral);
+.date-picker-start .date-picker-day.selected {
+  background: #f85f43;
   color: white;
   font-weight: 800;
-  box-shadow: 0 5px 14px rgba(234, 91, 89, .28);
+  box-shadow: 0 5px 16px rgba(248, 95, 67, .32);
+}
+
+.date-picker-end .date-picker-day.selected {
+  background: #f7b4a8;
+  color: #6b241b;
+  font-weight: 800;
+  box-shadow: 0 5px 16px rgba(247, 180, 168, .32);
 }
 
 .date-picker-day:disabled {
-  opacity: .2;
+  opacity: .18;
   cursor: not-allowed;
 }
 
 @media (max-width: 600px) {
   .date-picker-popover {
-    width: min(330px, calc(100vw - 3rem));
+    width: min(334px, calc(100vw - 3rem));
     padding: .9rem;
-    border-radius: 1.2rem;
+    border-radius: 1.45rem;
   }
 
   .date-picker-day {
