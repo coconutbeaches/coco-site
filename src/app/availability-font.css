@@ -1,0 +1,11 @@
+.search-form label {
+  font-family: var(--font-swanky-and-moo-moo), cursive;
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.search-form input,
+.search-form select {
+  font-family: Arial, Helvetica, sans-serif;
+}
