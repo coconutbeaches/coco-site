@@ -29,8 +29,8 @@ export default function ServicesPage() {
           <p className="eyebrow">Koh Phangan · Thailand</p>
           <h1 className="site-wordmark">Services</h1>
           <nav className="hero-nav eyebrow" aria-label="Site sections">
-            <a href="/about">About</a><span aria-hidden="true">·</span>
             <a href="/">Book</a><span aria-hidden="true">·</span>
+            <a href="/about">About</a><span aria-hidden="true">·</span>
             <a href="/gallery">Gallery</a>
           </nav>
         </div>
