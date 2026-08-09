@@ -23,13 +23,12 @@ export default function GalleryPage() {
         <img src={atmosphereImages[0]} alt="Coconut Beach atmosphere on Koh Phangan" />
         <div className="content-photo-hero-shade" />
         <div className="content-photo-hero-copy">
-          <a className="back-link" href="/">← Back to booking</a>
           <p className="eyebrow">Koh Phangan · Thailand</p>
           <h1 className="site-wordmark">Gallery</h1>
-          <nav className="page-hero-nav eyebrow" aria-label="Site sections">
+          <nav className="hero-nav eyebrow" aria-label="Site sections">
             <a href="/about">About</a><span aria-hidden="true">·</span>
             <a href="/services">Services</a><span aria-hidden="true">·</span>
-            <a href="/gallery">Gallery</a>
+            <a href="/">Book</a>
           </nav>
         </div>
       </section>
