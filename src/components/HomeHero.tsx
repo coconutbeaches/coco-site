@@ -9,6 +9,9 @@ const heroImages = [
   "https://media.coconut.holiday/Atmosphere/IMG_2578.jpeg",
 ];
 
+const bookingReviews = "https://www.booking.com/hotel/th/coconut-beach-bungalows.html#tab-reviews";
+const airbnbReviews = "https://www.airbnb.com/users/show/766649";
+
 export default function HomeHero() {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -35,8 +38,15 @@ export default function HomeHero() {
       </div>
       <div className="hero-shade" aria-hidden="true" />
       <div className="hero-inner">
-        <h1 className="site-wordmark">Coconut Beach</h1>
-        <p className="eyebrow">Koh Phangan · Thailand</p>
+        <div className="hero-brand-row">
+          <h1 className="site-wordmark">Coconut Beach</h1>
+          <p className="eyebrow hero-location">Koh Phangan · Thailand</p>
+        </div>
+        <div className="hero-review-links" aria-label="Guest reviews">
+          <span>Please see our guest reviews</span>
+          <a href={bookingReviews} target="_blank" rel="noreferrer">Booking.com Reviews</a>
+          <a href={airbnbReviews} target="_blank" rel="noreferrer">Airbnb Reviews</a>
+        </div>
       </div>
     </section>
   );
