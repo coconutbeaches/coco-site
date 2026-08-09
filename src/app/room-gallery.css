@@ -123,7 +123,8 @@
 
 .room-gallery-video {
   width: auto;
-  max-width: min(100%, 520px);
+  max-width: min(100%, 680px);
+  min-height: min(72dvh, 720px);
   background: #000;
 }
 
@@ -202,7 +203,11 @@
   }
 
   .room-gallery-stage { border-radius: .9rem; }
-  .room-gallery-video { max-width: 100%; }
+  .room-gallery-video {
+    width: min(100%, 92vw);
+    max-width: 100%;
+    min-height: 74dvh;
+  }
   .room-gallery-nav { width: 42px; height: 42px; }
   .room-gallery-thumbs button { flex-basis: 62px; width: 62px; height: 48px; }
 }
