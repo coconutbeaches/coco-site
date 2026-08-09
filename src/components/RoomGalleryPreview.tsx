@@ -123,7 +123,16 @@ export default function RoomGalleryPreview({ label, coverUrl, images, videoUrl }
                 aria-current={itemIndex === index ? "true" : undefined}
               >
                 {item.type === "video" ? (
-                  <span className="room-gallery-video-thumb" aria-hidden="true">▶</span>
+                  <span className="room-gallery-video-thumb" aria-hidden="true">
+                    <video
+                      src={`${item.src}#t=0.1`}
+                      muted
+                      playsInline
+                      preload="metadata"
+                      tabIndex={-1}
+                    />
+                    <span className="room-gallery-video-play">▶</span>
+                  </span>
                 ) : (
                   <img src={item.src} alt="" loading="lazy" />
                 )}
