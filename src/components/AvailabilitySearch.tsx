@@ -117,6 +117,8 @@ export default function AvailabilitySearch() {
   const [checkOut, setCheckOut] = useState(defaults.checkOut);
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
+  const [childAges, setChildAges] = useState<string[]>([]);
+  const [searchedChildAges, setSearchedChildAges] = useState<number[]>([]);
   const [result, setResult] = useState<SearchResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -129,12 +131,27 @@ export default function AvailabilitySearch() {
     if (!checkOut || checkOut <= value) setCheckOut(nextDayIso(value));
   }
 
+  function handleChildrenChange(nextChildren: number) {
+    setChildren(nextChildren);
+    setChildAges((current) => Array.from({ length: nextChildren }, (_, index) => current[index] ?? ""));
+  }
+
+  function handleChildAgeChange(index: number, value: string) {
+    setChildAges((current) => current.map((age, ageIndex) => ageIndex === index ? value : age));
+  }
+
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setResult(null);
+
     if (!checkIn || !checkOut || checkOut <= checkIn) {
       setError("Check-out must be after check-in.");
+      return;
+    }
+
+    if (children > 0 && (childAges.length !== children || childAges.some((age) => age === ""))) {
+      setError("Please select the age of each child.");
       return;
     }
 
@@ -144,6 +161,7 @@ export default function AvailabilitySearch() {
       const response = await fetch(`/api/availability?${params}`, { cache: "no-store" });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "Could not check availability.");
+      setSearchedChildAges(childAges.map(Number));
       setResult(payload as SearchResponse);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Could not check availability.");
@@ -171,10 +189,32 @@ export default function AvailabilitySearch() {
         </label>
         <label>
           Children
-          <select value={children} onChange={(event) => setChildren(Number(event.target.value))}>
+          <select value={children} onChange={(event) => handleChildrenChange(Number(event.target.value))}>
             {[0, 1, 2, 3, 4].map((value) => <option key={value}>{value}</option>)}
           </select>
         </label>
+
+        {children > 0 && (
+          <div className="child-age-fields" aria-label="Children's ages">
+            {childAges.map((age, index) => (
+              <label className="child-age-field" key={index}>
+                <span className="sr-only">Child {index + 1} age</span>
+                <select
+                  value={age}
+                  onChange={(event) => handleChildAgeChange(index, event.target.value)}
+                  required
+                  aria-label={`Child ${index + 1} age, required`}
+                >
+                  <option value="" disabled>⚠ Child {index + 1}</option>
+                  {Array.from({ length: 18 }, (_, childAge) => (
+                    <option key={childAge} value={childAge}>Child {index + 1}: age {childAge}</option>
+                  ))}
+                </select>
+              </label>
+            ))}
+          </div>
+        )}
+
         <button className="button search-button" disabled={loading} type="submit">{loading ? "Searching…" : "Search"}</button>
       </form>
 
@@ -196,9 +236,10 @@ export default function AvailabilitySearch() {
 
           <div className="room-results">
             {groupedRooms.map(({ key, label, photoUrl, room }) => {
-              const whatsappText = encodeURIComponent(`Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children. The quoted total is ${formatTHB(room.total_thb)}.`);
+              const childAgeText = result.children > 0 ? `, ages ${searchedChildAges.join(", ")}` : "";
+              const whatsappText = encodeURIComponent(`Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children${childAgeText}. The quoted total is ${formatTHB(room.total_thb)}.`);
               const whatsappUrl = `https://wa.me/66926025572?text=${whatsappText}`;
-              const handoffSummary = `${label} · ${result.check_in} → ${result.check_out} · ${result.adults} adults${result.children ? ` · ${result.children} children` : ""} · ${formatTHB(room.total_thb)}`;
+              const handoffSummary = `${label} · ${result.check_in} → ${result.check_out} · ${result.adults} adults${result.children ? ` · ${result.children} children, ages ${searchedChildAges.join(", ")}` : ""} · ${formatTHB(room.total_thb)}`;
 
               return (
                 <article className="room-result room-result-card" key={key}>
