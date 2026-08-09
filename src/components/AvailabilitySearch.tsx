@@ -42,6 +42,15 @@ type GroupedRoomResult = {
   room: RoomResult;
 };
 
+const videoBase = "https://pub-c96e6d24cc1f4aefa6a13bce49b614d9.r2.dev";
+const roomVideos: Partial<Record<RoomTypeKey, string>> = {
+  "ab-bungalow": `${videoBase}/1Bedroom.mp4`,
+  "beach-house": `${videoBase}/BeachHouse.mp4`,
+  "double-house": `${videoBase}/DoubleHouse.mp4`,
+  "jungle-house": `${videoBase}/JungleHouse.mp4`,
+  "new-house": `${videoBase}/NewHouse.mp4`,
+};
+
 const roomTypeMeta: Record<RoomTypeKey, { label: string; photoUrl: string | null }> = {
   "ab-bungalow": { label: "1 Bedroom", photoUrl: "https://media.coconut.holiday/1%20Bedroom/CoconutBeachBungalows_02.jpg" },
   "beach-house": { label: "Beach House", photoUrl: "https://media.coconut.holiday/Beachfront%20House/CoconutBeachBungalows_35.jpg" },
@@ -181,7 +190,12 @@ export default function AvailabilitySearch() {
               return (
                 <article className="room-result room-result-card" key={key}>
                   {photoUrl ? (
-                    <RoomGalleryPreview label={label} coverUrl={photoUrl} images={roomGalleries[key] ?? [photoUrl]} />
+                    <RoomGalleryPreview
+                      label={label}
+                      coverUrl={photoUrl}
+                      images={roomGalleries[key] ?? [photoUrl]}
+                      videoUrl={roomVideos[key] ?? null}
+                    />
                   ) : (
                     <div className="room-result-image room-result-placeholder">Photography coming soon</div>
                   )}
