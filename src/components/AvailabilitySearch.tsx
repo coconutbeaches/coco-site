@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import DatePicker from "@/components/DatePicker";
 
 type NightlyRate = { date: string; rate_thb: number | null };
 type RoomResult = {
@@ -124,6 +125,7 @@ export default function AvailabilitySearch() {
   const [loading, setLoading] = useState(false);
 
   const groupedRooms = useMemo(() => groupRooms(result?.rooms ?? []), [result]);
+  const today = isoDate(new Date());
 
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -159,11 +161,11 @@ export default function AvailabilitySearch() {
       <form className="search-form search-form-standalone" onSubmit={search}>
         <label>
           Check-in
-          <input type="date" value={checkIn} min={isoDate(new Date())} onChange={(event) => setCheckIn(event.target.value)} required />
+          <DatePicker value={checkIn} min={today} onChange={setCheckIn} ariaLabel="Choose check-in date" />
         </label>
         <label>
           Check-out
-          <input type="date" value={checkOut} min={checkIn || isoDate(new Date())} onChange={(event) => setCheckOut(event.target.value)} required />
+          <DatePicker value={checkOut} min={checkIn || today} onChange={setCheckOut} ariaLabel="Choose check-out date" />
         </label>
         <label>
           Adults
