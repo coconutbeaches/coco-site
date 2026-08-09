@@ -5,13 +5,18 @@ const aboutHero = "https://media.coconut.holiday/Atmosphere/IMG_2425.jpeg";
 export default function AboutPage() {
   return (
     <main>
-      <section className="content-photo-hero">
+      <section className="content-photo-hero cinematic-page-hero">
         <img src={aboutHero} alt="Coconut Beach and Haad Khom on Koh Phangan" />
         <div className="content-photo-hero-shade" />
         <div className="content-photo-hero-copy">
           <a className="back-link" href="/">← Back to booking</a>
           <p className="eyebrow">Koh Phangan · Thailand</p>
           <h1 className="site-wordmark">About Coconut Beach</h1>
+          <nav className="page-hero-nav eyebrow" aria-label="Site sections">
+            <a href="/about">About</a><span aria-hidden="true">·</span>
+            <a href="/services">Services</a><span aria-hidden="true">·</span>
+            <a href="/gallery">Gallery</a>
+          </nav>
         </div>
       </section>
 
