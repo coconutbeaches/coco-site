@@ -26,8 +26,8 @@
 .content-photo-hero-shade {
   z-index: 1;
   background:
-    linear-gradient(90deg, rgba(4, 25, 22, .46) 0%, rgba(4, 25, 22, .18) 55%, rgba(4, 25, 22, .06) 100%),
-    linear-gradient(180deg, rgba(4, 25, 22, .06) 30%, rgba(4, 25, 22, .62) 100%);
+    linear-gradient(90deg, rgba(0, 0, 0, .22) 0%, rgba(0, 0, 0, .08) 55%, rgba(0, 0, 0, .02) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, .02) 35%, rgba(0, 0, 0, .38) 100%);
 }
 
 .content-photo-hero-copy {
@@ -78,6 +78,6 @@
   }
 
   .content-photo-hero-shade {
-    background: linear-gradient(180deg, rgba(4, 25, 22, .12), rgba(4, 25, 22, .72));
+    background: linear-gradient(180deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .42));
   }
 }
