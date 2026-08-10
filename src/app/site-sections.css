@@ -51,6 +51,15 @@
   line-height: 1.08;
 }
 
+.service-card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  margin: .9rem 0 1rem;
+  border-radius: 1rem;
+}
+
 .review-section {
   text-align: center;
 }
@@ -122,5 +131,3 @@
     font-size: 1.65rem;
   }
 }
-
-/* redeploy trigger: 2026-08-10 */
