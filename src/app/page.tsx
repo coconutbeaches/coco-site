@@ -18,19 +18,17 @@ export default function HomePage() {
       <section className="section review-section" id="reviews">
         <p className="eyebrow">Please see our guest reviews</p>
         <div className="review-links">
-          <a href={bookingReviews} target="_blank" rel="noreferrer">
-            <img src={bookingLogo} alt="Booking.com" />
-            <span>Reviews</span>
+          <a href={bookingReviews} target="_blank" rel="noreferrer" aria-label="Booking.com Reviews">
+            <img src={bookingLogo} alt="Booking.com Reviews" />
           </a>
-          <a href={airbnbReviews} target="_blank" rel="noreferrer">
-            <img src={airbnbLogo} alt="Airbnb" />
-            <span>Reviews</span>
+          <a href={airbnbReviews} target="_blank" rel="noreferrer" aria-label="Airbnb Reviews">
+            <img src={airbnbLogo} alt="Airbnb Reviews" />
           </a>
         </div>
       </section>
 
       <section className="section help-section">
-        <div className="card help-card">
+        <div className="help-card">
           <p className="eyebrow">Need help?</p>
           <a className="button whatsapp-help-button" href={whatsappUrl}>
             <span>Message us on WhatsApp</span>
