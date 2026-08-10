@@ -1,10 +1,10 @@
-// Deployment sync: ensures latest Services and Gallery navigation reaches production.
 const servicesHero = "https://media.coconut.holiday/Atmosphere/69633d3f-afb1-4a3c-9712-a5051117a3b2.png";
 
 const services = [
   {
     title: "Beachfront Massage",
-    body: "Guests enjoy our beachfront massage from 8am to 6pm each day, with the sounds of the beach and boats passing by, and one of the best views on Koh Phangan.",
+    body: "Guests enjoy our beachfront massage from 9am to 7pm each day, with the sounds of the beach and boats passing by, and one of the best views on Koh Phangan.",
+    image: "https://media.coconut.holiday/Massage/IMG_1783.jpeg",
   },
   {
     title: "Snorkeling and Paddle Boarding",
@@ -12,7 +12,7 @@ const services = [
   },
   {
     title: "Mini Gym / Office Space",
-    body: "Each bungalow can reserve the mini gym / office space for one hour each day for private use. It includes dumbbells, massage chair, treadmill, ice bath, gym bench with leg curl and extensions, barbell and plates, resistance bands, full-length mirror and a 65-inch smart TV.",
+    body: "Each bungalow can reserve the mini gym / office space for private use. It includes dumbbells, massage chair, treadmill, gym bench with leg curl and extensions, barbell and plates, resistance bands, full-length mirror and a 65-inch smart TV.",
   },
   {
     title: "Motorbikes",
@@ -42,6 +42,14 @@ export default function ServicesPage() {
           {services.map((service) => (
             <article className="card" key={service.title}>
               <h2>{service.title}</h2>
+              {service.image && (
+                <img
+                  className="service-card-image"
+                  src={service.image}
+                  alt="Beachfront massage at Coconut Beach"
+                  loading="lazy"
+                />
+              )}
               <p>{service.body}</p>
             </article>
           ))}
