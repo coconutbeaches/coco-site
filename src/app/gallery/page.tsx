@@ -3,6 +3,7 @@ const atmosphereImages = [
   "https://media.coconut.holiday/Atmosphere/69633d3f-afb1-4a3c-9712-a5051117a3b2.png",
   "https://media.coconut.holiday/Atmosphere/IMG_2425.jpeg",
   "https://media.coconut.holiday/Atmosphere/IMG_2578.jpeg",
+  "https://media.coconut.holiday/Atmosphere/atmos1.jpeg",
   "https://media.coconut.holiday/Atmosphere/1c286e8c-5888-47b5-a831-429b9338de79.jpg",
   "https://media.coconut.holiday/Atmosphere/4309A31D-5C49-4546-9D2F-DFD9B22D3298.jpeg",
   "https://media.coconut.holiday/Atmosphere/CE1A3027-396B-44BF-B469-9D98B0A1AA68.jpeg",
@@ -17,6 +18,7 @@ const atmosphereImages = [
   "https://media.coconut.holiday/Massage/IMG_0163.jpeg",
   "https://media.coconut.holiday/Restaurant/FD1CFF48-42D5-454D-B066-BAA27A0850E8.jpeg",
   "https://media.coconut.holiday/Restaurant/IMG_0767.jpeg",
+  "https://media.coconut.holiday/Services/kayak.jpg",
 ];
 
 export default function GalleryPage() {
