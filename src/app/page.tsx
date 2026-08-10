@@ -12,33 +12,6 @@ export default function HomePage() {
 
       <AvailabilitySearch />
 
-      <section className="section" id="fit">
-        <div className="grid">
-          <article className="card">
-            <p>
-              Coconut Beach is ideally located on the serene north side of Koh Phangan next to
-              Chaloklum village and accessible by our private road or boat. Coconut Beach is proud
-              to be 100% solar powered, and completely off grid (except for the fiber internet),
-              with all water and energy generated onsite.
-            </p>
-          </article>
-          <article className="card notice">
-            <p>
-              <strong>WE DO NOT ACCEPT GROUPS OF FRIENDS</strong>, especially if coming for the Full
-              Moon Party. We also do not accept children under 8.
-            </p>
-          </article>
-          <article className="card">
-            <p>
-              Guests enjoy the beachfront restaurant, which makes use of the organic farm onsite,
-              as well as the beachfront massage studio. Additionally, our guests take full
-              advantage of being located at one of the best snorkeling spots in Thailand and
-              directly next to a hidden, unnamed, secret beach.
-            </p>
-          </article>
-        </div>
-      </section>
-
       <section className="section review-section" id="reviews">
         <p className="eyebrow">Guest reviews</p>
         <h2>Please see our guest reviews</h2>
@@ -56,8 +29,6 @@ export default function HomePage() {
           <a className="button" href={whatsappUrl}>Message us on WhatsApp</a>
         </div>
       </section>
-
-      <footer>Coconut Beach Koh Phangan</footer>
     </main>
   );
 }
