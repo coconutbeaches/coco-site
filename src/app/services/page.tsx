@@ -17,9 +17,9 @@ const services = [
     image: "https://media.coconut.holiday/Services/minigym.jpg",
   },
   {
-    title: "Motorbikes",
+    title: "Motorbikes Available",
     body: "Scooters are the easiest way to get around Koh Phangan. We make it simple for our guests, with bikes available onsite and local friends who can help when ours are all in use.",
-    image: "https://media.coconut.holiday/Services/bike.png",
+    image: "https://media.coconut.holiday/Services/bike2.jpeg",
   },
 ];
 
