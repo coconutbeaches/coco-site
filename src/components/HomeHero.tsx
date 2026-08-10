@@ -7,6 +7,7 @@ const heroImages = [
   "https://media.coconut.holiday/Atmosphere/69633d3f-afb1-4a3c-9712-a5051117a3b2.png",
   "https://media.coconut.holiday/Atmosphere/IMG_2425.jpeg",
   "https://media.coconut.holiday/Atmosphere/IMG_2578.jpeg",
+  "https://media.coconut.holiday/Atmosphere/atmos1.jpeg",
 ];
 
 export default function HomeHero() {
