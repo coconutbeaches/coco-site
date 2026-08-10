@@ -13,7 +13,7 @@ export default function HomePage() {
       <AvailabilitySearch />
 
       <section className="section review-section" id="reviews">
-        <p className="eyebrow">Guest reviews</p>
+        <p className="eyebrow">Please see our guest reviews</p>
         <h2>Please see our guest reviews</h2>
         <div className="review-links">
           <a href={bookingReviews} target="_blank" rel="noreferrer">Booking.com Reviews</a>
