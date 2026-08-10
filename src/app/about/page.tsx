@@ -9,7 +9,6 @@ export default function AboutPage() {
         <img src={aboutHero} alt="Coconut Beach and Haad Khom on Koh Phangan" />
         <div className="content-photo-hero-shade" />
         <div className="content-photo-hero-copy">
-          <p className="eyebrow">Koh Phangan · Thailand</p>
           <h1 className="site-wordmark">About</h1>
           <nav className="hero-nav eyebrow" aria-label="Site sections">
             <a href="/">Book</a><span aria-hidden="true">·</span>
