@@ -29,7 +29,7 @@ export default function HomePage() {
 
       <section className="section help-section">
         <div className="help-card">
-          <p className="eyebrow">Need help?</p>
+          <p className="eyebrow">Any questions?</p>
           <a className="button whatsapp-help-button" href={whatsappUrl}>
             <span>Message us on WhatsApp</span>
             <img src={whatsappLogo} alt="" aria-hidden="true" />
