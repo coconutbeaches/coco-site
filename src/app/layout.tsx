@@ -29,6 +29,11 @@ export const metadata: Metadata = {
   title: "Coconut Beach Koh Phangan",
   description:
     "A quiet, off-grid beachfront stay on Koh Phangan for independent travelers seeking nature, simplicity, and direct beach access.",
+  icons: {
+    icon: "https://media.coconut.holiday/Logos/favicon.png",
+    shortcut: "https://media.coconut.holiday/Logos/favicon.png",
+    apple: "https://media.coconut.holiday/Logos/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
