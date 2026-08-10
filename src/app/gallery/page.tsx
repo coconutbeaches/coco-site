@@ -21,6 +21,9 @@ const atmosphereImages = [
   "https://media.coconut.holiday/Services/kayak.jpg",
 ];
 
+const instagramUrl = "https://www.instagram.com/coconutbeach.bungalows/";
+const instagramLogo = "https://media.coconut.holiday/Services/iglogo.png";
+
 export default function GalleryPage() {
   return (
     <main>
@@ -42,6 +45,16 @@ export default function GalleryPage() {
           {atmosphereImages.map((src, index) => (
             <img key={src} src={src} alt={`Coconut Beach atmosphere ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
           ))}
+          <a
+            className="instagram-gallery-card"
+            href={instagramUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="See more Coconut Beach photos on Instagram"
+          >
+            <span>Many more here...</span>
+            <img src={instagramLogo} alt="Instagram" />
+          </a>
         </div>
       </section>
     </main>
