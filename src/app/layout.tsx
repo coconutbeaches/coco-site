@@ -34,7 +34,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${pacifico.variable} ${swankyAndMooMoo.variable}`}>{children}</body>
+      <body className={`${pacifico.variable} ${swankyAndMooMoo.variable}`}>
+        {children}
+        <footer className="site-footer">
+          <div className="site-footer-wordmark">Coconut Beach</div>
+          <div className="site-footer-location">KOH PHANGAN · THAILAND</div>
+        </footer>
+      </body>
     </html>
   );
 }
