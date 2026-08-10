@@ -7,16 +7,19 @@ const services = [
     image: "https://media.coconut.holiday/Massage/IMG_1783.jpeg",
   },
   {
-    title: "Snorkeling and Paddle Boarding",
+    title: "Snorkel and Kayak",
     body: "Coconut Beach is blessed with one of the best snorkeling spots on Koh Phangan. Tour boats and even boats from large Koh Samui resorts regularly bring guests to our beach. Paddle boards are also available for our guests.",
+    image: "https://media.coconut.holiday/Services/snorkle.jpg",
   },
   {
     title: "Mini Gym / Office Space",
     body: "Each bungalow can reserve the mini gym / office space for private use. It includes dumbbells, massage chair, treadmill, gym bench with leg curl and extensions, barbell and plates, resistance bands, full-length mirror and a 65-inch smart TV.",
+    image: "https://media.coconut.holiday/Services/minigym.jpg",
   },
   {
     title: "Motorbikes",
     body: "Scooters are the easiest way to get around Koh Phangan. We make it simple for our guests, with bikes available onsite and local friends who can help when ours are all in use.",
+    image: "https://media.coconut.holiday/Services/bike.png",
   },
 ];
 
@@ -46,7 +49,7 @@ export default function ServicesPage() {
                 <img
                   className="service-card-image"
                   src={service.image}
-                  alt="Beachfront massage at Coconut Beach"
+                  alt={`${service.title} at Coconut Beach`}
                   loading="lazy"
                 />
               )}
