@@ -81,8 +81,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: .5rem;
   min-height: 44px;
-  padding: .75rem 1rem;
+  padding: .7rem 1rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--paper);
@@ -95,6 +96,54 @@
 .review-links a:focus-visible {
   border-color: var(--sea);
   background: rgba(23, 107, 100, .06);
+}
+
+.review-links img {
+  display: block;
+  width: auto;
+  max-width: 112px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.help-section {
+  padding-top: 0;
+}
+
+.help-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.help-card .eyebrow {
+  margin: 0;
+}
+
+.whatsapp-help-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  background: #25D366;
+  color: #fff;
+  border-color: #25D366;
+}
+
+.whatsapp-help-button:hover,
+.whatsapp-help-button:focus-visible {
+  background: #20bd5a;
+  border-color: #20bd5a;
+  color: #fff;
+}
+
+.whatsapp-help-button img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
 }
 
 .about-copy {
@@ -151,6 +200,11 @@
 
   .service-grid .card h2 {
     font-size: 1.9rem;
+  }
+
+  .review-links img {
+    max-width: 96px;
+    height: 22px;
   }
 
   .site-footer {
