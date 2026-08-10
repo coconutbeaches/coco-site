@@ -114,21 +114,21 @@
 }
 
 .site-footer {
-  padding: 4rem 1.25rem 4.5rem;
+  padding: 3rem 1.25rem 3.5rem;
   text-align: center;
-  color: #17211e;
+  color: var(--ink);
 }
 
 .site-footer-wordmark {
   font-family: var(--font-pacifico), cursive;
   font-weight: 400;
-  font-size: clamp(2.6rem, 6vw, 4.8rem);
+  font-size: clamp(1.3rem, 3vw, 2.4rem);
   line-height: 1.05;
 }
 
 .site-footer-location {
-  margin-top: .75rem;
-  font-size: .78rem;
+  margin-top: .4rem;
+  font-size: .42rem;
   font-weight: 700;
   letter-spacing: .12em;
 }
@@ -154,10 +154,10 @@
   }
 
   .site-footer {
-    padding: 3rem 1rem 3.5rem;
+    padding: 2.5rem 1rem 3rem;
   }
 
   .site-footer-location {
-    font-size: .68rem;
+    font-size: .38rem;
   }
 }
