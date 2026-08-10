@@ -1,5 +1,7 @@
 const bookingReviews = "https://www.booking.com/hotel/th/coconut-beach-bungalows.html#tab-reviews";
 const airbnbReviews = "https://www.airbnb.com/users/show/766649";
+const bookingLogo = "https://media.coconut.holiday/Services/bookinglogo.png";
+const airbnbLogo = "https://media.coconut.holiday/Services/airbnblogo.png";
 const aboutHero = "https://media.coconut.holiday/Atmosphere/IMG_2425.jpeg";
 
 export default function AboutPage() {
@@ -65,8 +67,14 @@ export default function AboutPage() {
       <section className="section review-section">
         <p className="eyebrow">Please see our guest reviews</p>
         <div className="review-links">
-          <a href={bookingReviews} target="_blank" rel="noreferrer">Booking.com Reviews</a>
-          <a href={airbnbReviews} target="_blank" rel="noreferrer">Airbnb Reviews</a>
+          <a href={bookingReviews} target="_blank" rel="noreferrer">
+            <img src={bookingLogo} alt="Booking.com" />
+            <span>Reviews</span>
+          </a>
+          <a href={airbnbReviews} target="_blank" rel="noreferrer">
+            <img src={airbnbLogo} alt="Airbnb" />
+            <span>Reviews</span>
+          </a>
         </div>
       </section>
     </main>
