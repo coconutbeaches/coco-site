@@ -1,4 +1,4 @@
-const servicesHero = "https://media.coconut.holiday/Atmosphere/69633d3f-afb1-4a3c-9712-a5051117a3b2.png";
+const servicesHero = "https://media.coconut.holiday/Massage/new-massage-wide.jpg";
 
 const services = [
   {
@@ -27,7 +27,7 @@ export default function ServicesPage() {
   return (
     <main>
       <section className="content-photo-hero cinematic-page-hero">
-        <img src={servicesHero} alt="Coconut Beach on Koh Phangan" />
+        <img src={servicesHero} alt="Beachfront massage at Coconut Beach on Koh Phangan" />
         <div className="content-photo-hero-shade" />
         <div className="content-photo-hero-copy">
           <h1 className="site-wordmark">Services</h1>
