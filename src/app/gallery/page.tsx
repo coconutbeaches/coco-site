@@ -14,6 +14,9 @@ const atmosphereImages = [
   "https://media.coconut.holiday/Atmosphere/IMG_0260.jpeg",
   "https://media.coconut.holiday/Atmosphere/IMG_0371.jpeg",
   "https://media.coconut.holiday/Atmosphere/IMG_0373.jpeg",
+  "https://media.coconut.holiday/Massage/IMG_0163.jpeg",
+  "https://media.coconut.holiday/Restaurant/FD1CFF48-42D5-454D-B066-BAA27A0850E8.jpeg",
+  "https://media.coconut.holiday/Restaurant/IMG_0767.jpeg",
 ];
 
 export default function GalleryPage() {
