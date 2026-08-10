@@ -14,7 +14,6 @@ export default function HomePage() {
 
       <section className="section review-section" id="reviews">
         <p className="eyebrow">Please see our guest reviews</p>
-        <h2>Please see our guest reviews</h2>
         <div className="review-links">
           <a href={bookingReviews} target="_blank" rel="noreferrer">Booking.com Reviews</a>
           <a href={airbnbReviews} target="_blank" rel="noreferrer">Airbnb Reviews</a>
