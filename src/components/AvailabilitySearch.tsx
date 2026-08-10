@@ -105,6 +105,12 @@ function formatTHB(value: number | null) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "THB", maximumFractionDigits: 0 }).format(value);
 }
 
+function formatAgeList(ages: number[]) {
+  if (ages.length <= 1) return ages.join("");
+  if (ages.length === 2) return `${ages[0]} and ${ages[1]}`;
+  return `${ages.slice(0, -1).join(", ")}, and ${ages[ages.length - 1]}`;
+}
+
 export default function AvailabilitySearch() {
   const defaults = useMemo(() => {
     const checkIn = new Date();
@@ -237,10 +243,11 @@ export default function AvailabilitySearch() {
 
           <div className="room-results">
             {groupedRooms.map(({ key, label, photoUrl, room }) => {
-              const childAgeText = result.children > 0 ? `, ages ${searchedChildAges.join(", ")}` : "";
+              const formattedAges = formatAgeList(searchedChildAges);
+              const childAgeText = result.children > 0 ? `: ages ${formattedAges}` : "";
               const whatsappText = encodeURIComponent(`Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children${childAgeText}. The quoted total is ${formatTHB(room.total_thb)}.`);
               const whatsappUrl = `https://wa.me/66926025572?text=${whatsappText}`;
-              const handoffSummary = `${label} · ${result.check_in} → ${result.check_out} · ${result.adults} adults${result.children ? ` · ${result.children} children, ages ${searchedChildAges.join(", ")}` : ""} · ${formatTHB(room.total_thb)}`;
+              const handoffSummary = `${label} · ${result.check_in} → ${result.check_out} · ${result.adults} adults${result.children ? ` · ${result.children} children: ages ${formattedAges}` : ""} · ${formatTHB(room.total_thb)}`;
 
               return (
                 <article className="room-result room-result-card" key={key}>
