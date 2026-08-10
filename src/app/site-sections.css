@@ -73,7 +73,8 @@
 .review-links {
   display: flex;
   justify-content: center;
-  gap: .75rem;
+  align-items: center;
+  gap: 1.25rem;
   flex-wrap: wrap;
 }
 
@@ -81,28 +82,23 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
-  min-height: 44px;
-  padding: .7rem 1rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--paper);
-  color: var(--ink);
-  font-weight: 700;
+  padding: 0;
+  border: 0;
+  background: transparent;
   text-decoration: none;
 }
 
 .review-links a:hover,
 .review-links a:focus-visible {
-  border-color: var(--sea);
-  background: rgba(23, 107, 100, .06);
+  background: transparent;
+  transform: translateY(-1px);
 }
 
 .review-links img {
   display: block;
   width: auto;
-  max-width: 112px;
-  height: 24px;
+  max-width: 150px;
+  max-height: 38px;
   object-fit: contain;
 }
 
@@ -203,8 +199,8 @@
   }
 
   .review-links img {
-    max-width: 96px;
-    height: 22px;
+    max-width: 125px;
+    max-height: 32px;
   }
 
   .site-footer {
