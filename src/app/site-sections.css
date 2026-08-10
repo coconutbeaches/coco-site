@@ -160,6 +160,39 @@
   background: rgba(234, 91, 89, .07);
 }
 
+.instagram-gallery-card {
+  height: 300px;
+  border-radius: 1rem;
+  background: rgba(23, 50, 43, .52);
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.instagram-gallery-card span {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.instagram-gallery-card img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 0;
+  background: transparent;
+}
+
+.instagram-gallery-card:hover,
+.instagram-gallery-card:focus-visible {
+  filter: brightness(.94);
+}
+
 .site-footer {
   padding: 3rem 1.25rem 3.5rem;
   text-align: center;
@@ -203,6 +236,16 @@
   .review-links img {
     max-width: 213px;
     max-height: 54px;
+  }
+
+  .instagram-gallery-card {
+    height: 180px;
+    border-radius: .75rem;
+  }
+
+  .instagram-gallery-card img {
+    width: 52px;
+    height: 52px;
   }
 
   .site-footer {
