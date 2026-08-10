@@ -36,12 +36,6 @@ export default function GalleryPage() {
       </section>
 
       <section className="section">
-        <div className="section-heading-row">
-          <div>
-            <p className="eyebrow">Coconut Beach</p>
-            <h2>Beach, jungle and island life</h2>
-          </div>
-        </div>
         <div className="photo-grid atmosphere-gallery-grid">
           {atmosphereImages.map((src, index) => (
             <img key={src} src={src} alt={`Coconut Beach atmosphere ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
