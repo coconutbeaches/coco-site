@@ -67,13 +67,11 @@ export default function AboutPage() {
       <section className="section review-section">
         <p className="eyebrow">Please see our guest reviews</p>
         <div className="review-links">
-          <a href={bookingReviews} target="_blank" rel="noreferrer">
-            <img src={bookingLogo} alt="Booking.com" />
-            <span>Reviews</span>
+          <a href={bookingReviews} target="_blank" rel="noreferrer" aria-label="Booking.com Reviews">
+            <img src={bookingLogo} alt="Booking.com Reviews" />
           </a>
-          <a href={airbnbReviews} target="_blank" rel="noreferrer">
-            <img src={airbnbLogo} alt="Airbnb" />
-            <span>Reviews</span>
+          <a href={airbnbReviews} target="_blank" rel="noreferrer" aria-label="Airbnb Reviews">
+            <img src={airbnbLogo} alt="Airbnb Reviews" />
           </a>
         </div>
       </section>
