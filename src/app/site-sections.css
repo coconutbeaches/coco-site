@@ -116,7 +116,7 @@
 .site-footer {
   padding: 3rem 1.25rem 3.5rem;
   text-align: center;
-  color: var(--ink);
+  color: rgba(23, 50, 43, .52);
 }
 
 .site-footer-wordmark {
