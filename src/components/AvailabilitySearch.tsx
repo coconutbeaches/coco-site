@@ -122,10 +122,9 @@ export default function AvailabilitySearch() {
 
   const [checkIn, setCheckIn] = useState(defaults.checkIn);
   const [checkOut, setCheckOut] = useState(defaults.checkOut);
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(0);
-  const [childAges, setChildAges] = useState<string[]>([]);
-  const [searchedChildAges, setSearchedChildAges] = useState<number[]>([]);
+  const [guests, setGuests] = useState(2);
+  const [guestAges, setGuestAges] = useState<string[]>(["", ""]);
+  const [searchedGuestAges, setSearchedGuestAges] = useState<number[]>([]);
   const [result, setResult] = useState<SearchResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -138,13 +137,13 @@ export default function AvailabilitySearch() {
     if (!checkOut || checkOut <= value) setCheckOut(nextDayIso(value));
   }
 
-  function handleChildrenChange(nextChildren: number) {
-    setChildren(nextChildren);
-    setChildAges((current) => Array.from({ length: nextChildren }, (_, index) => current[index] ?? ""));
+  function handleGuestsChange(nextGuests: number) {
+    setGuests(nextGuests);
+    setGuestAges((current) => Array.from({ length: nextGuests }, (_, index) => current[index] ?? ""));
   }
 
-  function handleChildAgeChange(index: number, value: string) {
-    setChildAges((current) => current.map((age, ageIndex) => ageIndex === index ? value : age));
+  function handleGuestAgeChange(index: number, value: string) {
+    setGuestAges((current) => current.map((age, ageIndex) => ageIndex === index ? value : age));
   }
 
   async function search(event: FormEvent<HTMLFormElement>) {
@@ -157,8 +156,17 @@ export default function AvailabilitySearch() {
       return;
     }
 
-    if (children > 0 && (childAges.length !== children || childAges.some((age) => age === ""))) {
-      setError("Please select the age of each child.");
+    if (guestAges.length !== guests || guestAges.some((age) => age === "")) {
+      setError("Please select the age of each guest.");
+      return;
+    }
+
+    const numericGuestAges = guestAges.map(Number);
+    const adults = numericGuestAges.filter((age) => age >= 18).length;
+    const children = numericGuestAges.filter((age) => age < 18).length;
+
+    if (adults === 0) {
+      setError("At least one guest must be 18 or older.");
       return;
     }
 
@@ -168,7 +176,7 @@ export default function AvailabilitySearch() {
       const response = await fetch(`/api/availability?${params}`, { cache: "no-store" });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "Could not check availability.");
-      setSearchedChildAges(childAges.map(Number));
+      setSearchedGuestAges(numericGuestAges);
       setResult(payload as SearchResponse);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Could not check availability.");
@@ -189,38 +197,30 @@ export default function AvailabilitySearch() {
           <DatePicker value={checkOut} min={nextDayIso(checkIn || today)} onChange={setCheckOut} ariaLabel="Choose check-out date" tone="end" />
         </label>
         <label>
-          Adults
-          <select value={adults} onChange={(event) => setAdults(Number(event.target.value))}>
+          # of guests
+          <select value={guests} onChange={(event) => handleGuestsChange(Number(event.target.value))}>
             {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => <option key={value}>{value}</option>)}
           </select>
         </label>
-        <label>
-          Children
-          <select value={children} onChange={(event) => handleChildrenChange(Number(event.target.value))}>
-            {[0, 1, 2, 3, 4].map((value) => <option key={value}>{value}</option>)}
-          </select>
-        </label>
 
-        {children > 0 && (
-          <div className={styles.childAgeFields} aria-label="Children's ages">
-            {childAges.map((age, index) => (
-              <label className={styles.childAgeField} key={index}>
-                <span className={styles.srOnly}>Child {index + 1} age</span>
-                <select
-                  value={age}
-                  onChange={(event) => handleChildAgeChange(index, event.target.value)}
-                  required
-                  aria-label={`Child ${index + 1} age, required`}
-                >
-                  <option value="" disabled>⚠ Child {index + 1}</option>
-                  {Array.from({ length: 18 }, (_, childAge) => (
-                    <option key={childAge} value={childAge}>Child {index + 1}: age {childAge}</option>
-                  ))}
-                </select>
-              </label>
-            ))}
-          </div>
-        )}
+        <div className={styles.childAgeFields} aria-label="Guest ages">
+          {guestAges.map((age, index) => (
+            <label className={styles.childAgeField} key={index}>
+              <span className={styles.srOnly}>Guest {index + 1} age</span>
+              <select
+                value={age}
+                onChange={(event) => handleGuestAgeChange(index, event.target.value)}
+                required
+                aria-label={`Guest ${index + 1} age, required`}
+              >
+                <option value="" disabled>⚠ Guest {index + 1}</option>
+                {Array.from({ length: 86 }, (_, guestAge) => (
+                  <option key={guestAge} value={guestAge}>Guest {index + 1}: age {guestAge}</option>
+                ))}
+              </select>
+            </label>
+          ))}
+        </div>
 
         <button className="button search-button" disabled={loading} type="submit">{loading ? "Searching…" : "Search"}</button>
       </form>
@@ -231,7 +231,7 @@ export default function AvailabilitySearch() {
         <div className="results">
           <div className="results-summary">
             <h3>{groupedRooms.length ? `Available options for ${formatStayDates(result.check_in, result.check_out)}` : "No exact matches"}</h3>
-            <p>{result.nights} nights · {result.adults} adults{result.children ? ` · ${result.children} children` : ""}</p>
+            <p>{result.nights} nights · {searchedGuestAges.length} {searchedGuestAges.length === 1 ? "guest" : "guests"}</p>
           </div>
 
           {!groupedRooms.length && (
@@ -243,11 +243,12 @@ export default function AvailabilitySearch() {
 
           <div className="room-results">
             {groupedRooms.map(({ key, label, photoUrl, room }) => {
-              const formattedAges = formatAgeList(searchedChildAges);
-              const childAgeText = result.children > 0 ? `: ages ${formattedAges}` : "";
-              const whatsappText = encodeURIComponent(`Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${result.adults} adults and ${result.children} children${childAgeText}. The quoted total is ${formatTHB(room.total_thb)}.`);
+              const formattedAges = formatAgeList(searchedGuestAges);
+              const guestCount = searchedGuestAges.length;
+              const guestLabel = guestCount === 1 ? "guest" : "guests";
+              const whatsappText = encodeURIComponent(`Hello Coconut Beach, I’m interested in ${label} from ${result.check_in} to ${result.check_out} for ${guestCount} ${guestLabel}: ages ${formattedAges}. The quoted total is ${formatTHB(room.total_thb)}.`);
               const whatsappUrl = `https://wa.me/66926025572?text=${whatsappText}`;
-              const handoffSummary = `${label} · ${result.check_in} → ${result.check_out} · ${result.adults} adults${result.children ? ` · ${result.children} children: ages ${formattedAges}` : ""} · ${formatTHB(room.total_thb)}`;
+              const handoffSummary = `${label} · ${result.check_in} → ${result.check_out} · ${guestCount} ${guestLabel}: ages ${formattedAges} · ${formatTHB(room.total_thb)}`;
 
               return (
                 <article className="room-result room-result-card" key={key}>
