@@ -122,8 +122,8 @@ export default function AvailabilitySearch() {
 
   const [checkIn, setCheckIn] = useState(defaults.checkIn);
   const [checkOut, setCheckOut] = useState(defaults.checkOut);
-  const [guests, setGuests] = useState(2);
-  const [guestAges, setGuestAges] = useState<string[]>(["", ""]);
+  const [guests, setGuests] = useState(0);
+  const [guestAges, setGuestAges] = useState<string[]>([]);
   const [searchedGuestAges, setSearchedGuestAges] = useState<number[]>([]);
   const [result, setResult] = useState<SearchResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -153,6 +153,11 @@ export default function AvailabilitySearch() {
 
     if (!checkIn || !checkOut || checkOut <= checkIn) {
       setError("Check-out must be after check-in.");
+      return;
+    }
+
+    if (guests === 0) {
+      setError("Please select the number of guests.");
       return;
     }
 
@@ -199,28 +204,30 @@ export default function AvailabilitySearch() {
         <label>
           # of guests
           <select value={guests} onChange={(event) => handleGuestsChange(Number(event.target.value))}>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((value) => <option key={value}>{value}</option>)}
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((value) => <option key={value}>{value}</option>)}
           </select>
         </label>
 
-        <div className={styles.childAgeFields} aria-label="Guest ages">
-          {guestAges.map((age, index) => (
-            <label className={styles.childAgeField} key={index}>
-              <span className={styles.srOnly}>Guest {index + 1} age</span>
-              <select
-                value={age}
-                onChange={(event) => handleGuestAgeChange(index, event.target.value)}
-                required
-                aria-label={`Guest ${index + 1} age, required`}
-              >
-                <option value="" disabled>⚠ Guest {index + 1}</option>
-                {Array.from({ length: 86 }, (_, guestAge) => (
-                  <option key={guestAge} value={guestAge}>Guest {index + 1}: age {guestAge}</option>
-                ))}
-              </select>
-            </label>
-          ))}
-        </div>
+        {guests > 0 && (
+          <div className={styles.childAgeFields} aria-label="Guest ages">
+            {guestAges.map((age, index) => (
+              <label className={styles.childAgeField} key={index}>
+                <span className={styles.srOnly}>Guest {index + 1} Age</span>
+                <select
+                  value={age}
+                  onChange={(event) => handleGuestAgeChange(index, event.target.value)}
+                  required
+                  aria-label={`Guest ${index + 1} Age, required`}
+                >
+                  <option value="" disabled>⚠ Guest {index + 1} Age</option>
+                  {Array.from({ length: 86 }, (_, guestAge) => (
+                    <option key={guestAge} value={guestAge}>Guest {index + 1} Age: {guestAge}</option>
+                  ))}
+                </select>
+              </label>
+            ))}
+          </div>
+        )}
 
         <button className="button search-button" disabled={loading} type="submit">{loading ? "Searching…" : "Search"}</button>
       </form>
