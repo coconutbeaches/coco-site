@@ -136,6 +136,51 @@ function groupAvailability(result: AvailabilityResponse): AgentAvailabilityOptio
   return Array.from(grouped.values());
 }
 
+function uniqueStrings(values: Array<string | null | undefined>) {
+  return Array.from(new Set(values.filter((value): value is string => Boolean(value))));
+}
+
+function maxNumber(values: Array<number | null | undefined>) {
+  const numbers = values.filter((value): value is number => typeof value === "number");
+  return numbers.length ? Math.max(...numbers) : null;
+}
+
+function childFriendlyValue(rooms: AvailabilityRoom[]) {
+  const values = rooms
+    .map((room) => room.child_friendly)
+    .filter((value): value is boolean => typeof value === "boolean");
+
+  if (!values.length) return null;
+  return values.every((value) => value === values[0]) ? values[0] : null;
+}
+
+function enrichAvailabilityOption(option: AgentAvailabilityOption, result: AvailabilityResponse) {
+  const roomType = roomTypes.find((room) => room.slug === option.roomType) ?? null;
+  const liveRooms = result.rooms.filter((room) => option.units.includes(room.room_code));
+
+  return {
+    room_type: option.roomType,
+    name: option.name,
+    available_units: option.units,
+    quoted_total_thb: option.totalThb,
+    price_complete: option.priceComplete,
+    bedrooms: roomType?.bedrooms ?? null,
+    bathrooms: roomType?.bathrooms ?? null,
+    sleeps: roomType?.sleeps ?? maxNumber(liveRooms.map((room) => room.max_total_guests)),
+    size_sqm: roomType?.sizeSqm ?? null,
+    summary: roomType?.summary ?? null,
+    limitations: roomType?.limitations ?? [],
+    view_types: uniqueStrings(liveRooms.map((room) => room.view_type)),
+    tags: uniqueStrings(liveRooms.flatMap((room) => room.tags ?? [])),
+    child_friendly: childFriendlyValue(liveRooms),
+    max_adults: maxNumber(liveRooms.map((room) => room.max_adults)),
+    max_children: maxNumber(liveRooms.map((room) => room.max_children)),
+    max_total_guests: maxNumber(liveRooms.map((room) => room.max_total_guests)),
+    minimum_stay_nights: maxNumber(liveRooms.map((room) => room.minimum_stay_nights)),
+    page: roomType ? `/stays/${roomType.slug}` : null,
+  };
+}
+
 function formatAgeList(ages: number[]) {
   if (ages.length <= 1) return ages.join("");
   if (ages.length === 2) return `${ages[0]} and ${ages[1]}`;
@@ -218,7 +263,7 @@ export const searchAvailability = defineTool<StayInput>({
   stableKey: "coconut.availability_search",
   name: "search_availability",
   title: "Search live availability",
-  description: "Search Coconut Beach's live availability and direct-booking prices for specific check-in/check-out dates and guest ages. Use when the visitor wants to know what can actually be booked for their party. Returns live available room types, physical units and quoted totals in THB, and visibly shows the result on the website.",
+  description: "Search Coconut Beach's live availability and direct-booking prices for specific check-in/check-out dates and guest ages. Use when the visitor wants to know what can actually be booked, compare live options, or decide which available accommodation best fits their stated preferences. Returns live room types, physical units, quoted totals in THB, size, bedrooms, bathrooms, capacity, view types, feature tags, child suitability and known limitations so the calling agent can make a preference-aware recommendation. It does not invent missing features or apply a hidden universal ranking, and it visibly shows the live result on the website.",
   inputSchema: {
     type: "object",
     properties: {
@@ -253,15 +298,12 @@ export const searchAvailability = defineTool<StayInput>({
       check_out: result.check_out,
       nights: result.nights,
       guest_ages: input.guest_ages,
-      options: options.map((option) => ({
-        room_type: option.roomType,
-        name: option.name,
-        available_units: option.units,
-        quoted_total_thb: option.totalThb,
-        price_complete: option.priceComplete,
-      })),
+      options: options.map((option) => enrichAvailabilityOption(option, result)),
+      recommendation_guidance: options.length
+        ? "Compare these property-supplied facts against the visitor's stated priorities. Explain why an option fits, distinguish facts from judgment, do not assume unstated preferences, and treat absent fields as unknown rather than false."
+        : null,
       note: options.length
-        ? "These are live direct-booking results from Coconut Beach."
+        ? "These are live direct-booking results from Coconut Beach enriched with decision-useful accommodation facts."
         : "No Coconut Beach accommodation matches these exact dates and guest ages.",
     };
   },
