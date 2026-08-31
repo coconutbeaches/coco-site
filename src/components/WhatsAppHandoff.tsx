@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { QRCodeSVG } from "qrcode.react";
 
 type WhatsAppHandoffProps = {
@@ -61,13 +62,8 @@ export default function WhatsAppHandoff({
     setOpen(true);
   }
 
-  return (
-    <>
-      <button className="button room-action whatsapp-handoff-trigger" type="button" onClick={handleClick}>
-        {label}
-      </button>
-
-      {open && (
+  const modal = open && typeof document !== "undefined"
+    ? createPortal(
         <div className="whatsapp-modal-backdrop" role="presentation" onMouseDown={() => setOpen(false)}>
           <section
             className="whatsapp-modal"
@@ -106,8 +102,17 @@ export default function WhatsAppHandoff({
               Open WhatsApp Web
             </a>
           </section>
-        </div>
-      )}
+        </div>,
+        document.body,
+      )
+    : null;
+
+  return (
+    <>
+      <button className="button room-action whatsapp-handoff-trigger" type="button" onClick={handleClick}>
+        {label}
+      </button>
+      {modal}
     </>
   );
 }
