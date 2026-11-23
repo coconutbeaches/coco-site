@@ -201,9 +201,9 @@ export default function AvailabilitySearch() {
           Check-out
           <DatePicker value={checkOut} min={nextDayIso(checkIn || today)} onChange={setCheckOut} ariaLabel="Choose check-out date" tone="end" />
         </label>
-        <label>
+        <label className="search-guest-field">
           # of guests
-          <select value={guests} onChange={(event) => handleGuestsChange(Number(event.target.value))}>
+          <select className="search-guest-select" value={guests} onChange={(event) => handleGuestsChange(Number(event.target.value))}>
             {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((value) => <option key={value}>{value}</option>)}
           </select>
         </label>

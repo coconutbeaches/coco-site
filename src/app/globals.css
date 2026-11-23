@@ -71,6 +71,7 @@ h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin: .4rem 0 1rem; }
 .availability-heading { background: var(--paper); border-radius: 1.5rem 1.5rem 0 0; padding: 2rem 2rem 1rem; }
 .availability-heading p:last-child { margin-bottom: 0; opacity: .8; }
 .search-form {
+  --search-control-height: 48px;
   display: grid;
   grid-template-columns: repeat(4, minmax(130px, 1fr)) auto;
   gap: .8rem;
@@ -94,6 +95,31 @@ h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin: .4rem 0 1rem; }
   color: var(--ink);
   padding: .7rem .8rem;
   font-size: .88rem;
+}
+.search-form .search-guest-select {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  height: var(--search-control-height);
+  min-height: var(--search-control-height);
+  padding: 0 2.5rem 0 .9rem;
+  border: 1px solid rgba(23, 50, 43, .12);
+  border-radius: 1rem;
+  background: #fffdf8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2317322b' stroke-opacity='.58' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") right .9rem center / 18px 18px no-repeat;
+  cursor: pointer;
+}
+.search-form .search-guest-select:focus-visible {
+  outline: none;
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(234, 91, 89, .12);
+}
+@media (forced-colors: active) {
+  .search-form .search-guest-select {
+    -webkit-appearance: auto;
+    appearance: auto;
+    background-image: none;
+  }
+  .search-form .search-guest-select:focus-visible { outline: revert; }
 }
 .search-button {
   min-height: 48px;
@@ -179,7 +205,7 @@ footer { padding: 2rem 1.25rem 3rem; text-align: center; opacity: .75; }
   .availability-section { margin-top: -4rem; padding-inline: .75rem; }
   .availability-heading { padding: 1.4rem 1rem .8rem; }
   .search-form { grid-template-columns: 1fr 1fr; padding: 1.2rem 1rem; gap: .65rem; }
-  .search-form label:nth-of-type(1), .search-form label:nth-of-type(2) { grid-column: 1 / -1; }
+  .search-form label:nth-of-type(1), .search-form label:nth-of-type(2), .search-form .search-guest-field { grid-column: 1 / -1; }
   .results-summary { align-items: flex-start; flex-direction: column; }
   .room-results { grid-template-columns: 1fr; }
   .stay-grid { grid-template-columns: 1fr; }
